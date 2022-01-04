@@ -24,7 +24,7 @@ class Settings:
         self.fleet_drop_speed = 50
         self.fleet_direction = 1
 
-        self.speedup_scale = 2
+        self.speedup_scale = 1.01
         self.score_scale = 2
 
         self.initialize_dynamic_settings()
