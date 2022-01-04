@@ -18,6 +18,10 @@
    "value": false
   },
   {
+   "optionDest": "icon_file",
+   "value": "D:/PythonProjects/alien-invasion/installer/game.ico"
+  },
+  {
    "optionDest": "ascii",
    "value": false
   },
