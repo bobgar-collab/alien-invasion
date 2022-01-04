@@ -2,15 +2,14 @@ import sys
 from time import sleep
 
 import pygame
-from pygame.sprite import Sprite
 
-from game.settings import Settings
-from game.game_stats import GameStats
-from game.scoreboard import Scoreboard
-from game.button import Button
-from game.ship import Ship
-from game.bullet import Bullet
-from game.alien import Alien
+from settings import Settings
+from game_stats import GameStats
+from scoreboard import Scoreboard
+from button import Button
+from ship import Ship
+from bullet import Bullet
+from alien import Alien
 
 
 class AlienInvasion:
@@ -25,7 +24,7 @@ class AlienInvasion:
             self.settings.screen_height = self.screen.get_rect().height
         else:
             self.screen = pygame.display.set_mode((self.settings.screen_width,
-                                               self.settings.screen_height))
+                                                   self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
         self.bg_image = pygame.image.load(self.settings.bg_image_path)
@@ -44,11 +43,13 @@ class AlienInvasion:
     def run_game(self):
         while True:
             self._check_events()
+
             if self.stats.game_active:
                 self.ship.update()
                 self._update_aliens()
-                self._update_screen()
                 self._update_bullets()
+
+            self._update_screen()
 
     def _update_aliens(self):
         self._check_fleet_edges()
@@ -206,18 +207,15 @@ class AlienInvasion:
 
     def _update_screen(self):
         self.screen.blit(self.bg_image, self.screen.get_rect())
-        # self.screen.fill(self.settings.bg_color)
 
-        self.ship.update()
+        # self.ship.update()
         self.ship.blitme()
-
         self.aliens.draw(self.screen)
         self.sb.show_score()
 
         bullet: Bullet
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-        self.aliens.draw(self.screen)
 
         if not self.stats.game_active:
             self.play_button.draw_button()

@@ -10,13 +10,13 @@ class Settings:
         self.screen_width = 1200  # разришение
         self.screen_height = 800  # 1900, 1010
         self.bg_color = (00, 0, 20)  # цвет
-        self.bg_image_path = './images/bg.png'
+        self.bg_image_path = 'images/bg.png'
 
         # Параметры пули
         # self.bullet_speed = 1
         self.bullet_width = 15
         self.bullet_height = 15
-        self.bullet_img_path = './images/bullet.png'
+        self.bullet_img_path = 'images/bullet.png'
         # Кол-во пуль
         if self.full_screen:
             self.bullets_allowed = 15
@@ -25,7 +25,7 @@ class Settings:
 
         # Параметры корабля
         # self.ship_speed = 1.5
-        self.ship_limit = 3
+        self.ship_limit = 1
         #
         self.alien_width = 80
         self.alien_height = 80

@@ -5,10 +5,8 @@ class GameStats():
     def __init__(self, ai_game):
         self.settings = ai_game.settings
         self.reset_stats()
-        self.game_active = True
 
         data = self.load_dictionary()
-
         self.high_score = data['high_score']
 
     def update_high_score(self, high_score):

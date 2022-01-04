@@ -18,11 +18,11 @@ class Ship(Sprite):
         self.moving_left = False
 
     def show_ship_img(self):
-        self.image = pygame.image.load('./images/ship.png')
+        self.image = pygame.image.load('images/ship.png')
         self.image = pygame.transform.scale(self.image, (80, 80))
 
     def show_explosion_ship_img(self):
-        self.image = pygame.image.load('./images/explosion.png')
+        self.image = pygame.image.load('images/explosion.png')
         self.image = pygame.transform.scale(self.image, (80, 80))
 
     def update(self):
