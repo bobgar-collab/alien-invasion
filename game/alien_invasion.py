@@ -122,6 +122,7 @@ class AlienInvasion:
             self._show_ship_explosion()
 
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             self.aliens.empty()
             self.bullets.empty()
@@ -166,8 +167,10 @@ class AlienInvasion:
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.stats.game_active = True
+
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
             self.aliens.empty()
             self.bullets.empty()
