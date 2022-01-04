@@ -2,7 +2,6 @@ class Settings:
     """Класс для хранения всех настроек игры Alien Invasion."""
 
     def __init__(self):
-        """Инициализирует настройки игры."""
         self.record_file_path = 'data/records.json'
 
         # Параметры экрана
@@ -25,7 +24,7 @@ class Settings:
 
         # Параметры корабля
         # self.ship_speed = 1.5
-        self.ship_limit = 1
+        self.ship_limit = 3
         #
         self.alien_width = 80
         self.alien_height = 80
@@ -33,7 +32,7 @@ class Settings:
         self.fleet_drop_speed = 10
         # self.fleet_direction = 1
 
-        self.speedup_scale = 1.2
+        self.speedup_scale = 1.05
         self.score_scale = 2
 
         self.initialize_dynamic_settings()
