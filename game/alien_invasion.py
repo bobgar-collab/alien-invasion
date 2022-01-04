@@ -19,13 +19,18 @@ class AlienInvasion:
         pygame.init()
 
         self.settings = Settings()
-
-        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        # self.settings.screen_width = self.screen.get_rect().width
-        # self.settings.screen_height = self.screen.get_rect().height
-        self.screen = pygame.display.set_mode((self.settings.screen_width,
+        if self.settings.full_screen:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.settings.screen_width = self.screen.get_rect().width
+            self.settings.screen_height = self.screen.get_rect().height
+        else:
+            self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
+
+        self.bg_image = pygame.image.load(self.settings.bg_image_path)
+        self.screen_rect = self.screen.get_rect()
+        self.bg_image = pygame.transform.scale(self.bg_image, (self.screen_rect.w, self.screen_rect.h))
 
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
@@ -200,7 +205,8 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _update_screen(self):
-        self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.bg_image, self.screen.get_rect())
+        # self.screen.fill(self.settings.bg_color)
 
         self.ship.update()
         self.ship.blitme()

@@ -3,17 +3,26 @@ class Settings:
 
     def __init__(self):
         """Инициализирует настройки игры."""
+        self.record_file_path = 'data/records.json'
+
+        # Параметры экрана
+        self.full_screen = False
+        self.screen_width = 1200  # разришение
+        self.screen_height = 800  # 1900, 1010
+        self.bg_color = (00, 0, 20)  # цвет
+        self.bg_image_path = './images/bg.png'
+
         # Параметры пули
         # self.bullet_speed = 1
         self.bullet_width = 15
         self.bullet_height = 15
         self.bullet_img_path = './images/bullet.png'
-        self.bullets_allowed = 1000
+        # Кол-во пуль
+        if self.full_screen:
+            self.bullets_allowed = 15
+        else:
+            self.bullets_allowed = 5
 
-        # Параметры экрана
-        self.screen_width = 1200  # разришение
-        self.screen_height = 800  # 1900, 1010
-        self.bg_color = (00, 0, 20)  # цвет
         # Параметры корабля
         # self.ship_speed = 1.5
         self.ship_limit = 3
@@ -31,9 +40,11 @@ class Settings:
 
     def initialize_dynamic_settings(self):
         self.ship_speed = 1.5
-        self.bullet_speed = 1
+        if self.full_screen:
+            self.bullet_speed = 3
+        else:
+            self.bullet_speed = 1
         self.alien_speed = 2
-
         self.fleet_direction = 1
         self.alien_points = 50
 
