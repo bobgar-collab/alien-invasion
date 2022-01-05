@@ -40,16 +40,39 @@ class AlienInvasion:
         self._create_fleet()
         self.play_button = Button(self, "Play")
 
-    def run_game(self):
-        while True:
-            self._check_events()
+        # Play bg music
+        pygame.mixer.music.load('sound/background.mp3')
+        pygame.mixer.music.play(-1, 0.0)
+        # pygame.mixer.music.stop()
 
+        # load effect sounds
+        self.sound_shot = pygame.mixer.Sound('sound/shot.wav')
+        self.sound_explosion = pygame.mixer.Sound('sound/explosion.wav')
+        self.sound_explosion_ship = pygame.mixer.Sound('sound/explosion_ship.wav')
+
+    def run_game(self):
+        self._init_time()
+
+        while True:
+            # Calculate delta time
+            ticks = pygame.time.get_ticks()
+            self.settings.delta_time = (ticks - self.last_ticks) * 0.001
+            # Max 100Fps
+            if self.settings.delta_time < 0.01:
+                continue
+            # Update last_ticks
+            self.last_ticks = ticks
+
+            self._check_events()
             if self.stats.game_active:
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
 
             self._update_screen()
+
+    def _init_time(self):
+        self.last_ticks = pygame.time.get_ticks()
 
     def _update_aliens(self):
         self._check_fleet_edges()
@@ -65,6 +88,7 @@ class AlienInvasion:
 
         if collisions:
             for aliens in collisions.values():
+                self.sound_explosion.play()
                 self.stats.score += self.settings.alien_points * len(aliens)
             # self.stats.score += self.settings.alien_points
             self.sb.prep_score()
@@ -124,9 +148,10 @@ class AlienInvasion:
         self.ship.show_ship_img()
 
     def _ship_hit(self):
-        if self.stats.ships_left > 0:
-            self._show_ship_explosion()
+        self._show_ship_explosion()
+        self.sound_explosion_ship.play()
 
+        if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
             self.sb.prep_ships()
 
@@ -137,6 +162,8 @@ class AlienInvasion:
             self.ship.center_ship()
 
             sleep(1.5)
+
+            self._init_time()
         else:
             self.stats.game_active = False
 
@@ -198,6 +225,7 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            self.sound_shot.play()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:

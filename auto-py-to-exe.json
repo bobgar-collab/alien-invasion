@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "D:/PythonProjects/alien-invasion/installer/game.ico"
+   "value": "D:/PythonProjects/alien-invasion/game.ico"
   },
   {
    "optionDest": "ascii",
@@ -67,11 +67,11 @@
   },
   {
    "optionDest": "datas",
-   "value": "D:/PythonProjects/alien-invasion/data;data/"
+   "value": "D:/PythonProjects/alien-invasion/images;images/"
   },
   {
    "optionDest": "datas",
-   "value": "D:/PythonProjects/alien-invasion/images;images/"
+   "value": "D:/PythonProjects/alien-invasion/data;data/"
   }
  ],
  "nonPyinstallerOptions": {
