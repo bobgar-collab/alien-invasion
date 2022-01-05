@@ -3,13 +3,13 @@ from time import sleep
 
 import pygame
 
-from settings import Settings
+from alien import Alien
+from bullet import Bullet
+from button import Button
 from game_stats import GameStats
 from scoreboard import Scoreboard
-from button import Button
+from settings import Settings
 from ship import Ship
-from bullet import Bullet
-from alien import Alien
 
 
 class AlienInvasion:
@@ -19,12 +19,15 @@ class AlienInvasion:
 
         self.settings = Settings()
         if self.settings.full_screen:
-            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((self.settings.screen_width,
+                                                   self.settings.screen_height),
+                                                  pygame.FULLSCREEN)
             self.settings.screen_width = self.screen.get_rect().width
             self.settings.screen_height = self.screen.get_rect().height
         else:
             self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                    self.settings.screen_height))
+
         pygame.display.set_caption("Alien Invasion")
 
         self.bg_image = pygame.image.load(self.settings.bg_image_path)
@@ -32,7 +35,7 @@ class AlienInvasion:
         self.bg_image = pygame.transform.scale(self.bg_image, (self.screen_rect.w, self.screen_rect.h))
 
         self.stats = GameStats(self)
-        self.sb = Scoreboard(self)
+        self.scoreboard = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -45,7 +48,7 @@ class AlienInvasion:
         pygame.mixer.music.play(-1, 0.0)
         # pygame.mixer.music.stop()
 
-        # load effect sounds
+        # Load effect sounds
         self.sound_shot = pygame.mixer.Sound('sound/shot.wav')
         self.sound_explosion = pygame.mixer.Sound('sound/explosion.wav')
         self.sound_explosion_ship = pygame.mixer.Sound('sound/explosion_ship.wav')
@@ -90,9 +93,9 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.sound_explosion.play()
                 self.stats.score += self.settings.alien_points * len(aliens)
-            # self.stats.score += self.settings.alien_points
-            self.sb.prep_score()
-            self.sb.check_high_score()
+
+            self.scoreboard.prep_score()
+            self.scoreboard.check_high_score()
 
         if not self.aliens:
             self.bullets.empty()
@@ -100,7 +103,7 @@ class AlienInvasion:
             self.settings.increase_speed()
 
             self.stats.level += 1
-            self.sb.prep_level()
+            self.scoreboard.prep_level()
 
     def _check_aliens_bottom(self):
         screen_rect = self.screen.get_rect()
@@ -153,7 +156,7 @@ class AlienInvasion:
 
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
-            self.sb.prep_ships()
+            self.scoreboard.prep_ships()
 
             self.aliens.empty()
             self.bullets.empty()
@@ -193,17 +196,15 @@ class AlienInvasion:
                 self._check_play_button(mouse_pos)
 
     def _check_play_button(self, mouse_pos):
-
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        # if self.play_button.rect.collidepoint(mouse_pos):
         if button_clicked and not self.stats.game_active:
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.stats.game_active = True
 
-            self.sb.prep_score()
-            self.sb.prep_level()
-            self.sb.prep_ships()
+            self.scoreboard.prep_score()
+            self.scoreboard.prep_level()
+            self.scoreboard.prep_ships()
 
             self.aliens.empty()
             self.bullets.empty()
@@ -236,10 +237,9 @@ class AlienInvasion:
     def _update_screen(self):
         self.screen.blit(self.bg_image, self.screen.get_rect())
 
-        # self.ship.update()
         self.ship.blitme()
         self.aliens.draw(self.screen)
-        self.sb.show_score()
+        self.scoreboard.show_score()
 
         bullet: Bullet
         for bullet in self.bullets.sprites():
@@ -254,5 +254,3 @@ class AlienInvasion:
 if __name__ == '__main__':
     ai = AlienInvasion()
     ai.run_game()
-
-    # 313

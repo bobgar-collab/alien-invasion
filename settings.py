@@ -1,14 +1,11 @@
 class Settings:
-    """Класс для хранения всех настроек игры Alien Invasion."""
-
     def __init__(self):
         self.record_file_path = 'data/records.json'
 
         # Параметры экрана
         self.full_screen = True
-        self.screen_width = 1200  # разришение
-        self.screen_height = 800  # 1900, 1010
-        self.bg_color = (00, 0, 20)  # цвет
+        self.screen_width = 1280
+        self.screen_height = 720
         self.bg_image_path = 'images/bg.png'
 
         # Параметры пули
@@ -26,7 +23,7 @@ class Settings:
         self.fleet_drop_speed = 10
         self.fleet_direction = 1
 
-        self.speedup_scale = 1.05
+        self.speedup_scale = 1.1
         self.score_scale = 2
 
         self.delta_time = 0
@@ -46,10 +43,6 @@ class Settings:
         self._alien_speed *= self.speedup_scale
 
         self.alien_points = int(self.alien_points * self.score_scale)
-
-    # def set_delta_time(self, time_ms):
-    #     # convert to time in seconds
-    #     self.delta_time = time_ms * 0.001
 
     def get_ship_speed(self):
         return self._ship_speed * self.delta_time
