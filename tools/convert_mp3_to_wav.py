@@ -1,5 +1,5 @@
 """
-Setupo FFMPEG before!!!
+Setup FFMPEG before!!!
 https://www.ffmpeg.org/download.html#build-windows
 """
 

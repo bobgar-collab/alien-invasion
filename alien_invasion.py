@@ -3,6 +3,7 @@ from time import sleep
 
 import pygame
 
+import screen_background as sb
 from alien import Alien
 from bullet import Bullet
 from button import Button
@@ -30,10 +31,7 @@ class AlienInvasion:
 
         pygame.display.set_caption("Alien Invasion")
 
-        self.bg_image = pygame.image.load(self.settings.bg_image_path)
-        self.screen_rect = self.screen.get_rect()
-        self.bg_image = pygame.transform.scale(self.bg_image, (self.screen_rect.w, self.screen_rect.h))
-
+        self.background = sb.ScreenBackground(self)
         self.stats = GameStats(self)
         self.scoreboard = Scoreboard(self)
 
@@ -68,6 +66,7 @@ class AlienInvasion:
 
             self._check_events()
             if self.stats.game_active:
+                self.background.update()
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
@@ -164,6 +163,7 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
+            # TODO use timer!!!
             sleep(1.5)
 
             self._init_time()
@@ -235,7 +235,7 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _update_screen(self):
-        self.screen.blit(self.bg_image, self.screen.get_rect())
+        self.background.blitme()
 
         self.ship.blitme()
         self.aliens.draw(self.screen)

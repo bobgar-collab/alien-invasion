@@ -31,6 +31,7 @@ class Settings:
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
+        self._bg_image_speed = 50
         self._ship_speed = 250
         self._bullet_speed = 300
         self._alien_speed = 200
@@ -38,11 +39,15 @@ class Settings:
         self.alien_points = 2
 
     def increase_speed(self):
+        self._bg_image_speed *= self.speedup_scale
         self._ship_speed *= self.speedup_scale
         self._bullet_speed *= self.speedup_scale
         self._alien_speed *= self.speedup_scale
 
         self.alien_points = int(self.alien_points * self.score_scale)
+
+    def get_bg_image_speed(self):
+        return self._bg_image_speed * self.delta_time
 
     def get_ship_speed(self):
         return self._ship_speed * self.delta_time
