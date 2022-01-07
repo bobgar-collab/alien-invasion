@@ -3,7 +3,7 @@ class Settings:
         self.record_file_path = 'data/records.json'
 
         # Параметры экрана
-        self.full_screen = True
+        self.full_screen = False
         self.screen_width = 1280
         self.screen_height = 720
         self.bg_image_path = 'images/bg.png'
