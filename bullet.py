@@ -11,12 +11,13 @@ class Bullet(Sprite):
         self.settings = ai_game.settings
         self.path = self.settings.bullet_img_path
 
+        # TODO move to method params
         angle = 0
         speed = self.settings.get_bullet_speed()
         start_pos = ai_game.ship.rect.midtop
 
         self.image = pygame.image.load(self.path)
-        self.image = pygame.transform.scale(self.image, (self.settings.bullet_width, self.settings.bullet_height + 50))
+        self.image = pygame.transform.scale(self.image, (self.settings.bullet_width, self.settings.bullet_height))
         # Rotate image
         self.image = pygame.transform.rotate(self.image, -angle)
 
