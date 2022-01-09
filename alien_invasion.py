@@ -1,3 +1,4 @@
+import random
 import sys
 from time import sleep
 
@@ -39,6 +40,7 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self.aliens_bullets = pygame.sprite.Group()
+        self.aliens_bullet_last_tick = 0
         # Can remove. Activate after button clicked
         # self._create_fleet()
         self.play_button = Button(self, "Play")
@@ -88,10 +90,13 @@ class AlienInvasion:
 
         self._check_aliens_bottom()
 
-    # TODO Add execution this method
     def _check_bullet_collisions(self):
-        # TODO check aliens bullets vs ship bullets and destroy all
-        pass
+        collisions = pygame.sprite.groupcollide(self.aliens_bullets, self.bullets, True, True)
+
+        if collisions:
+            for bullets in collisions.values():
+                # TODO Update sound
+                self.sound_explosion.play()
 
     def _check_bullet_alien_collisions(self):
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
@@ -106,6 +111,7 @@ class AlienInvasion:
 
         if not self.aliens:
             self.bullets.empty()
+            self.aliens_bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
 
@@ -139,16 +145,17 @@ class AlienInvasion:
 
         self._check_bullet_alien_collisions()
         self._check_bullet_ship_collisions()
+        self._check_bullet_collisions()
 
     def _aliens_fire(self):
-        # TODO Create aliens bullets
         ticks = pygame.time.get_ticks()
         s = int(ticks * 0.001)
-        if s // 5:
+        if s // 5 and self.aliens_bullet_last_tick != s:
             aliens_count = len(self.aliens)
-            # random index [0; aliens_count]
-            # create aliens_bullet for alien by random index
-            print(s)
+            random_index = random.randint(0, aliens_count - 1)
+            alien = self.aliens.sprites()[random_index]
+            self._alien_fire_bullet(alien)
+            self.aliens_bullet_last_tick = s
 
     def _create_fleet(self):
         alien = Alien(self)
