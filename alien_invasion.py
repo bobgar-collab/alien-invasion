@@ -54,6 +54,7 @@ class AlienInvasion:
         self.sound_shot = pygame.mixer.Sound('sound/shot.wav')
         self.sound_explosion = pygame.mixer.Sound('sound/explosion.wav')
         self.sound_explosion_ship = pygame.mixer.Sound('sound/explosion_ship.wav')
+        self.sound_explosion_bullets = pygame.mixer.Sound('sound/explosion_bullets.wav')
 
     def run_game(self):
         self._init_time()
@@ -95,8 +96,7 @@ class AlienInvasion:
 
         if collisions:
             for bullets in collisions.values():
-                # TODO Update sound
-                self.sound_explosion.play()
+                self.sound_explosion_bullets.play()
 
     def _check_bullet_alien_collisions(self):
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
