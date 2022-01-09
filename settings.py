@@ -6,7 +6,7 @@ class Settings:
         self.full_screen = False
         self.screen_width = 1280
         self.screen_height = 720
-        self.bg_image_path = 'images/bg.png'
+        self.bg_image_path = 'images/space_bg2.jpg.'   # 'images/bg.png'
 
         # Параметры пули
         self.bullet_width = 15

@@ -38,7 +38,9 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
-        self._create_fleet()
+        self.aliens_bullets = pygame.sprite.Group()
+        # Can remove. Activate after button clicked
+        # self._create_fleet()
         self.play_button = Button(self, "Play")
 
         # Play bg music
@@ -70,6 +72,7 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
+                self._aliens_fire()
 
             self._update_screen()
 
@@ -84,6 +87,11 @@ class AlienInvasion:
             self._ship_hit()
 
         self._check_aliens_bottom()
+
+    # TODO Add execution this method
+    def _check_bullet_collisions(self):
+        # TODO check aliens bullets vs ship bullets and destroy all
+        pass
 
     def _check_bullet_alien_collisions(self):
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
@@ -104,6 +112,12 @@ class AlienInvasion:
             self.stats.level += 1
             self.scoreboard.prep_level()
 
+    def _check_bullet_ship_collisions(self):
+        collisions = pygame.sprite.spritecollide(self.ship, self.aliens_bullets, True)
+
+        if collisions:
+            self._ship_hit()
+
     def _check_aliens_bottom(self):
         screen_rect = self.screen.get_rect()
         for alien in self.aliens.sprites():
@@ -113,12 +127,28 @@ class AlienInvasion:
 
     def _update_bullets(self):
         self.bullets.update()
+        self.aliens_bullets.update()
 
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        for bullet in self.aliens_bullets.copy():
+            if bullet.rect.top >= self.screen.get_rect().height:
+                self.aliens_bullets.remove(bullet)
+
         self._check_bullet_alien_collisions()
+        self._check_bullet_ship_collisions()
+
+    def _aliens_fire(self):
+        # TODO Create aliens bullets
+        ticks = pygame.time.get_ticks()
+        s = int(ticks * 0.001)
+        if s // 5:
+            aliens_count = len(self.aliens)
+            # random index [0; aliens_count]
+            # create aliens_bullet for alien by random index
+            print(s)
 
     def _create_fleet(self):
         alien = Alien(self)
@@ -158,6 +188,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
+            self.aliens_bullets.empty()
             self.bullets.empty()
 
             self._create_fleet()
@@ -207,6 +238,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
+            self.aliens_bullets.empty()
             self.bullets.empty()
 
             self._create_fleet()
@@ -219,12 +251,20 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+        # elif event.key == pygame.K_c:
+        #     for alien in self.aliens:
+        #         self._alien_fire_bullet(alien)
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
 
+    def _alien_fire_bullet(self, alien):
+        new_bullet = Bullet(self, alien.rect.midbottom, 180)
+        self.aliens_bullets.add(new_bullet)
+        self.sound_shot.play()
+
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self)
+            new_bullet = Bullet(self, self.ship.rect.midtop, 0)
             self.bullets.add(new_bullet)
             self.sound_shot.play()
 
@@ -243,6 +283,10 @@ class AlienInvasion:
 
         bullet: Bullet
         for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+
+        bullet: Bullet
+        for bullet in self.aliens_bullets.sprites():
             bullet.draw_bullet()
 
         if not self.stats.game_active:

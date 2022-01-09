@@ -4,17 +4,14 @@ from pygame.sprite import Sprite
 
 
 class Bullet(Sprite):
-    def __init__(self, ai_game):
+    def __init__(self, ai_game, start_pos, angle):
         super().__init__()
 
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.path = self.settings.bullet_img_path
 
-        # TODO move to method params
-        angle = 0
         speed = self.settings.get_bullet_speed()
-        start_pos = ai_game.ship.rect.midtop
 
         self.image = pygame.image.load(self.path)
         self.image = pygame.transform.scale(self.image, (self.settings.bullet_width, self.settings.bullet_height))
