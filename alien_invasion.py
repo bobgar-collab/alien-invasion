@@ -265,13 +265,13 @@ class AlienInvasion:
             sys.exit()
 
     def _alien_fire_bullet(self, alien):
-        new_bullet = Bullet(self, alien.rect.midbottom, 180)
+        new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
         self.aliens_bullets.add(new_bullet)
         self.sound_shot.play()
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self, self.ship.rect.midtop, 0)
+            new_bullet = Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path)
             self.bullets.add(new_bullet)
             self.sound_shot.play()
 

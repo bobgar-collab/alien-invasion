@@ -12,6 +12,7 @@ class Settings:
         self.bullet_width = 15
         self.bullet_height = 45
         self.bullet_img_path = 'images/bullet.png'
+        self.alien_bullet_img_path = 'images/bullet_green.png'
         # Кол-во пуль
         self.bullets_allowed = 5
 

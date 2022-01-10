@@ -4,16 +4,15 @@ from pygame.sprite import Sprite
 
 
 class Bullet(Sprite):
-    def __init__(self, ai_game, start_pos, angle):
+    def __init__(self, ai_game, start_pos, angle, path):
         super().__init__()
 
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        self.path = self.settings.bullet_img_path
 
         speed = self.settings.get_bullet_speed()
 
-        self.image = pygame.image.load(self.path)
+        self.image = pygame.image.load(path)
         self.image = pygame.transform.scale(self.image, (self.settings.bullet_width, self.settings.bullet_height))
         # Rotate image
         self.image = pygame.transform.rotate(self.image, -angle)
