@@ -1,6 +1,5 @@
 import random
 import sys
-from time import sleep
 
 import pygame
 
@@ -13,6 +12,9 @@ from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
 from sound_manager import SoundManager
+
+# Events
+ALIENS_FIRE_EVENT = pygame.USEREVENT + 1
 
 
 class AlienInvasion:
@@ -49,16 +51,20 @@ class AlienInvasion:
         self.sound.play_music()
 
     def run_game(self):
-        self.last_ticks = pygame.time.get_ticks()
-        while True:
-            ticks = pygame.time.get_ticks()
-            delta = (ticks - self.last_ticks) * 0.001
-            # Max 100Fps
-            if delta < 0.01:
-                continue
-            self.last_ticks = ticks
+        clock = pygame.time.Clock()
 
-            self.settings.delta_time = delta
+        # Events
+        pygame.time.set_timer(ALIENS_FIRE_EVENT, 5000)
+
+        # Main loop
+        while True:
+            # Limit the framerate and get the delta time
+            self.settings.delta_time = clock.tick(100)
+            # Ignore wait() execution result
+            if self.settings.delta_time > 500:
+                continue
+
+            print(self.settings.delta_time)
 
             self._check_events()
             if self.stats.game_active:
@@ -66,7 +72,6 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
-                self._aliens_fire()
 
             self._update_screen()
 
@@ -136,16 +141,6 @@ class AlienInvasion:
         self._check_bullet_ship_collisions()
         self._check_bullet_collisions()
 
-    def _aliens_fire(self):
-        ticks = pygame.time.get_ticks()
-        s = int(ticks * 0.001)
-        if s // 5 and self.aliens_bullet_last_tick != s:
-            aliens_count = len(self.aliens)
-            random_index = random.randint(0, aliens_count - 1)
-            alien = self.aliens.sprites()[random_index]
-            self._alien_fire_bullet(alien)
-            self.aliens_bullet_last_tick = s
-
     def _create_fleet(self):
         alien = Alien(self)
         alian_width, alien_height = alien.rect.size
@@ -190,9 +185,8 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
-            # TODO sleep 1.5s
-            pygame.time.wait(1500)
-            self.last_ticks = pygame.time.get_ticks()
+            # Making the script wait for 2 seconds
+            pygame.time.delay(2000)
         else:
             self.stats.game_active = False
 
@@ -220,6 +214,14 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+            elif event.type == ALIENS_FIRE_EVENT:
+                self._aliens_fire()
+
+    def _aliens_fire(self):
+        aliens_count = len(self.aliens)
+        random_index = random.randint(0, aliens_count - 1)
+        alien = self.aliens.sprites()[random_index]
+        self._alien_fire_bullet(alien)
 
     def _check_play_button(self, mouse_pos):
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)

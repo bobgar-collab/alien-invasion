@@ -6,7 +6,7 @@ class Settings:
         self.full_screen = False
         self.screen_width = 1280
         self.screen_height = 720
-        self.bg_image_path = 'images/space_bg2.jpg.'   # 'images/bg.png'
+        self.bg_image_path = 'images/space_bg2.jpg.'
 
         # Параметры пули
         self.bullet_width = 15
@@ -32,10 +32,10 @@ class Settings:
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
-        self._bg_image_speed = 50
-        self._ship_speed = 250
-        self._bullet_speed = 300
-        self._alien_speed = 200
+        self._bg_image_speed = 0.05
+        self._ship_speed = 0.25
+        self._bullet_speed = 0.3
+        self._alien_speed = 0.2
 
         self.alien_points = 2
 
