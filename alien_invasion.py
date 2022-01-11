@@ -12,6 +12,7 @@ from game_stats import GameStats
 from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
+from sound_manager import SoundManager
 
 
 class AlienInvasion:
@@ -46,15 +47,8 @@ class AlienInvasion:
         self.play_button = Button(self, "Play")
 
         # Play bg music
-        pygame.mixer.music.load('sound/background.mp3')
-        pygame.mixer.music.play(-1, 0.0)
-        # pygame.mixer.music.stop()
-
-        # Load effect sounds
-        self.sound_shot = pygame.mixer.Sound('sound/shot.wav')
-        self.sound_explosion = pygame.mixer.Sound('sound/explosion.wav')
-        self.sound_explosion_ship = pygame.mixer.Sound('sound/explosion_ship.wav')
-        self.sound_explosion_bullets = pygame.mixer.Sound('sound/explosion_bullets.wav')
+        self.sound = SoundManager()
+        self.sound.play_music()
 
     def run_game(self):
         self._init_time()
@@ -96,14 +90,14 @@ class AlienInvasion:
 
         if collisions:
             for bullets in collisions.values():
-                self.sound_explosion_bullets.play()
+                self.sound.play('explosion_bullets')
 
     def _check_bullet_alien_collisions(self):
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
         if collisions:
             for aliens in collisions.values():
-                self.sound_explosion.play()
+                self.sound.play('explosion')
                 self.stats.score += self.settings.alien_points * len(aliens)
 
             self.scoreboard.prep_score()
@@ -188,7 +182,7 @@ class AlienInvasion:
 
     def _ship_hit(self):
         self._show_ship_explosion()
-        self.sound_explosion_ship.play()
+        self.sound.play('explosion_ship')
 
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
@@ -267,13 +261,13 @@ class AlienInvasion:
     def _alien_fire_bullet(self, alien):
         new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
         self.aliens_bullets.add(new_bullet)
-        self.sound_shot.play()
+        self.sound.play('shot')
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path)
             self.bullets.add(new_bullet)
-            self.sound_shot.play()
+            self.sound.play('shot')
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
