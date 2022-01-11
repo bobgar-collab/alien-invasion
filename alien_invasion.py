@@ -42,26 +42,23 @@ class AlienInvasion:
         self.aliens = pygame.sprite.Group()
         self.aliens_bullets = pygame.sprite.Group()
         self.aliens_bullet_last_tick = 0
-        # Can remove. Activate after button clicked
-        # self._create_fleet()
-        self.play_button = Button(self, "Play")
 
-        # Play bg music
+        self.play_button = Button(self, "Play Now")
+
         self.sound = SoundManager()
         self.sound.play_music()
 
     def run_game(self):
-        self._init_time()
-
+        self.last_ticks = pygame.time.get_ticks()
         while True:
-            # Calculate delta time
             ticks = pygame.time.get_ticks()
-            self.settings.delta_time = (ticks - self.last_ticks) * 0.001
+            delta = (ticks - self.last_ticks) * 0.001
             # Max 100Fps
-            if self.settings.delta_time < 0.01:
+            if delta < 0.01:
                 continue
-            # Update last_ticks
             self.last_ticks = ticks
+
+            self.settings.delta_time = delta
 
             self._check_events()
             if self.stats.game_active:
@@ -72,9 +69,6 @@ class AlienInvasion:
                 self._aliens_fire()
 
             self._update_screen()
-
-    def _init_time(self):
-        self.last_ticks = pygame.time.get_ticks()
 
     def _update_aliens(self):
         self._check_fleet_edges()
@@ -120,6 +114,7 @@ class AlienInvasion:
 
     def _check_aliens_bottom(self):
         screen_rect = self.screen.get_rect()
+
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
                 self._ship_hit()
@@ -195,10 +190,9 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
-            # TODO use timer!!!
-            sleep(1.5)
-
-            self._init_time()
+            # TODO sleep 1.5s
+            pygame.time.wait(1500)
+            self.last_ticks = pygame.time.get_ticks()
         else:
             self.stats.game_active = False
 
@@ -276,9 +270,8 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _update_screen(self):
-        self.background.blitme()
-
-        self.ship.blitme()
+        self.background.draw_background()
+        self.ship.draw_ship()
         self.aliens.draw(self.screen)
         self.scoreboard.show_score()
 

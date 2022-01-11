@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 
 
 class Bullet(Sprite):
+
     def __init__(self, ai_game, start_pos, angle, path):
         super().__init__()
 

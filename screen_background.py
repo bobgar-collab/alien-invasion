@@ -22,6 +22,6 @@ class ScreenBackground:
         if self.y >= self.h:
             self.y = 0.0
 
-    def blitme(self):
+    def draw_background(self):
         self.screen.blit(self.bg_image, self.rect_a)
         self.screen.blit(self.bg_image, self.rect_b)

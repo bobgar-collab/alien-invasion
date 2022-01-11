@@ -3,6 +3,7 @@ from pygame.sprite import Sprite
 
 
 class Ship(Sprite):
+
     def __init__(self, ai_game):
         super().__init__()
 
@@ -35,7 +36,7 @@ class Ship(Sprite):
 
         self.rect.x = self.x
 
-    def blitme(self):
+    def draw_ship(self):
         self.screen.blit(self.image, self.rect)
 
     def center_ship(self):
