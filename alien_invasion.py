@@ -64,7 +64,7 @@ class AlienInvasion:
             if self.settings.delta_time > 500:
                 continue
 
-            print(self.settings.delta_time)
+            self.settings.delta_time = 11
 
             self._check_events()
             if self.stats.game_active:

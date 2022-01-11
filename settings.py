@@ -1,4 +1,5 @@
 class Settings:
+
     def __init__(self):
         self.record_file_path = 'data/records.json'
 
@@ -25,36 +26,22 @@ class Settings:
         self.fleet_direction = 1
 
         self.speedup_scale = 1.1
-        self.score_scale = 2
-
-        self.delta_time = 0
+        self.score_scale = 2.0
 
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
-        self._bg_image_speed = 0.05
-        self._ship_speed = 0.25
-        self._bullet_speed = 0.3
-        self._alien_speed = 0.2
+        self.bg_image_speed = 0.5
+        self.ship_speed = 3.0
+        self.bullet_speed = 4.0
+        self.alien_speed = 2.0
 
-        self.alien_points = 2
+        self.alien_points = 10
 
     def increase_speed(self):
-        self._bg_image_speed *= self.speedup_scale
-        self._ship_speed *= self.speedup_scale
-        self._bullet_speed *= self.speedup_scale
-        self._alien_speed *= self.speedup_scale
+        self.bg_image_speed *= self.speedup_scale
+        self.ship_speed *= self.speedup_scale
+        self.bullet_speed *= self.speedup_scale
+        self.alien_speed *= self.speedup_scale
 
         self.alien_points = int(self.alien_points * self.score_scale)
-
-    def get_bg_image_speed(self):
-        return self._bg_image_speed * self.delta_time
-
-    def get_ship_speed(self):
-        return self._ship_speed * self.delta_time
-
-    def get_bullet_speed(self):
-        return self._bullet_speed * self.delta_time
-
-    def get_alien_speed(self):
-        return self._alien_speed * self.delta_time

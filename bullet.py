@@ -11,7 +11,7 @@ class Bullet(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        speed = self.settings.get_bullet_speed()
+        speed = self.settings.bullet_speed
 
         self.image = pygame.image.load(path)
         self.image = pygame.transform.scale(self.image, (self.settings.bullet_width, self.settings.bullet_height))

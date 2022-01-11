@@ -28,5 +28,5 @@ class Alien(Sprite):
             return True
 
     def update(self):
-        self.x += self.settings.get_alien_speed() * self.settings.fleet_direction
+        self.x += self.settings.alien_speed * self.settings.fleet_direction
         self.rect.x = self.x

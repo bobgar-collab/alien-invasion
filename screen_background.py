@@ -16,7 +16,7 @@ class ScreenBackground:
         self.y = 0.0
 
     def update(self):
-        self.y += self.settings.get_bg_image_speed()
+        self.y += self.settings.bg_image_speed
         self.rect_a.y = int(self.y) - self.h
         self.rect_b.y = int(self.y)
         if self.y >= self.h:
