@@ -17,6 +17,13 @@ class Settings:
         self.screen_height = self.config_dict["screen_height"]
         self.bg_image_path = self.config_dict["bg_image_path"]
 
+        # TODO Move to config file
+        # Параметры бонуса
+        self.bonus_width = self.config_dict["bonus_width"]
+        self.bonus_height = 80
+        self.bonus_speed = 1
+        self.bunus_img_path = 'images/pngwing.com.png'
+
         # Параметры пули
         self.bullet_width = self.config_dict["bullet_width"]
         self.bullet_height = self.config_dict["bullet_height"]

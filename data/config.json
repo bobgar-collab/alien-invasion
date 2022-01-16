@@ -11,6 +11,8 @@
   "bullet_img_path": "images/bullet.png",
   "alien_bullet_img_path": "images/bullet_green.png",
 
+  "bonus_width": 80,
+
   "bullets_allowed": 5,
   "ship_limit": 3,
   "alien_width": 80,

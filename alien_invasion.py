@@ -5,6 +5,7 @@ import pygame
 
 import screen_background as sb
 from alien import Alien
+from bonus import Bonus
 from bullet import Bullet
 from button import Button
 from game_stats import GameStats
@@ -44,6 +45,7 @@ class AlienInvasion:
         self.aliens = pygame.sprite.Group()
         self.aliens_bullets = pygame.sprite.Group()
         self.aliens_bullet_last_tick = 0
+        self.bonuses = pygame.sprite.Group()
 
         self.play_button = Button(self, "Play Now")
 
@@ -72,6 +74,7 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
+                self._update_bonuses()
 
             self._update_screen()
 
@@ -98,6 +101,8 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.sound.play('explosion')
                 self.stats.score += self.settings.alien_points * len(aliens)
+                for alien in aliens:
+                    self._add_bonus(alien.rect)
 
             self.scoreboard.prep_score()
             self.scoreboard.check_high_score()
@@ -179,6 +184,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
+            # TODO
             self.aliens_bullets.empty()
             self.bullets.empty()
 
@@ -235,6 +241,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
+            # TODO
             self.aliens_bullets.empty()
             self.bullets.empty()
 
@@ -285,10 +292,44 @@ class AlienInvasion:
         for bullet in self.aliens_bullets.sprites():
             bullet.draw_bullet()
 
+        bonus: Bonus
+        for bonus in self.bonuses.sprites():
+            bonus.draw_bonus()
+
         if not self.stats.game_active:
             self.play_button.draw_button()
 
         pygame.display.flip()
+
+    # Bonuses
+
+    def _update_bonuses(self):
+        self.bonuses.update()
+
+        for bonus in self.bonuses.copy():
+            if bonus.rect.top >= self.screen.get_rect().height:
+                self.bonuses.remove(bonus)
+
+        self._check_bonus_collisions()
+
+    def _add_bonus(self, alien_rect):
+        if random.randint(1, 10) == 1:
+            new_bonus = Bonus(self, alien_rect.midbottom, 180, self.settings.bunus_img_path)
+            self.bonuses.add(new_bonus)
+
+    def _check_bonus_collisions(self):
+        collisions = pygame.sprite.spritecollide(self.ship, self.bonuses, False)
+
+        if collisions:
+            for bonus in collisions:
+                # Life
+                if self.settings.ship_limit >= self.stats.ships_left:
+                    self.bonuses.remove(bonus)
+                    self.life()
+
+    def life(self):
+        self.stats.ships_left += 1
+        self.scoreboard.prep_ships()
 
 
 if __name__ == '__main__':
