@@ -314,7 +314,7 @@ class AlienInvasion:
 
     def _add_bonus(self, alien_rect):
         if random.randint(1, 10) == 1:
-            new_bonus = Bonus(self, alien_rect.midbottom, 180, self.settings.bunus_img_path)
+            new_bonus = Bonus(self, alien_rect.midbottom, "LIFE")
             self.bonuses.add(new_bonus)
 
     def _check_bonus_collisions(self):
