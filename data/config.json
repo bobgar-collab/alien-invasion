@@ -1,0 +1,27 @@
+{
+  "record_file_path": "data/records.json",
+
+  "full_screen": false,
+  "screen_width": 1280,
+  "screen_height": 720,
+  "bg_image_path": "images/space_bg2.jpg.",
+
+  "bullet_width": 15,
+  "bullet_height": 45,
+  "bullet_img_path": "images/bullet.png",
+  "alien_bullet_img_path": "images/bullet_green.png",
+
+  "bullets_allowed": 5,
+  "ship_limit": 3,
+  "alien_width": 80,
+  "alien_height": 80,
+  "fleet_drop_speed": 10,
+  "fleet_direction": 1,
+  "speedup_scale": 1.1,
+  "score_scale": 2.0,
+
+  "bg_image_speed": 0.5,
+  "ship_speed": 3.0,
+  "bullet_speed": 4.0,
+  "alien_speed": 2.0
+}
