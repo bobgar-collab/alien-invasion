@@ -224,10 +224,11 @@ class AlienInvasion:
                 self._aliens_fire()
 
     def _aliens_fire(self):
-        aliens_count = len(self.aliens)
-        random_index = random.randint(0, aliens_count - 1)
-        alien = self.aliens.sprites()[random_index]
-        self._alien_fire_bullet(alien)
+        if self.stats.game_active == True:
+            aliens_count = len(self.aliens)
+            random_index = random.randint(0, aliens_count - 1)
+            alien = self.aliens.sprites()[random_index]
+            self._alien_fire_bullet(alien)
 
     def _check_play_button(self, mouse_pos):
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)

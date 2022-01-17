@@ -20,8 +20,8 @@ class Settings:
         # TODO Move to config file
         # Параметры бонуса
         self.bonus_width = self.config_dict["bonus_width"]
-        self.bonus_height = 80
-        self.bonus_speed = 1
+        self.bonus_height = self.config_dict["bonus_height"]
+        self.bonus_speed = self.config_dict["bonus_speed"]
         self.bunus_img_path = 'images/pngwing.com.png'
 
         # Параметры пули
