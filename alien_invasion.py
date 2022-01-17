@@ -52,8 +52,6 @@ class AlienInvasion:
         self.sound = SoundManager()
         self.sound.play_music()
 
-        #TODO make animated instance object
-
     def run_game(self):
         clock = pygame.time.Clock()
 
@@ -77,7 +75,6 @@ class AlienInvasion:
                 self._update_aliens()
                 self._update_bullets()
                 self._update_bonuses()
-                # TODO add animated sprite update
 
             self._update_screen()
 
