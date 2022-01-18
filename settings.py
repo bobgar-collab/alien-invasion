@@ -22,8 +22,8 @@ class Settings:
         self.bonus_width = self.config_dict["bonus_width"]
         self.bonus_height = self.config_dict["bonus_height"]
         self.bonus_speed = self.config_dict["bonus_speed"]
-        self.bonus_life_img_path = 'images/pngwing.com.png'
-        self.bonus_fire_img_path = 'images/bullet.png'
+        self.bonus_life_img_path = self.config_dict["bonus_life_img_path"]
+        self.bonus_fire_img_path = self.config_dict["bonus_fire_img_path"]
 
         # Параметры пули
         self.bullet_width = self.config_dict["bullet_width"]
