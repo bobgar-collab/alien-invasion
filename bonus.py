@@ -14,10 +14,11 @@ class Bonus(Sprite):
 
         path: str
         if bonus_type == "LIFE":
-            path = self.settings.bunus_img_path
+            path = self.settings.bonus_life_img_path
+        elif bonus_type == "FIRE":
+            path = self.settings.bonus_fire_img_path
         else:
-            # TODO Implement other bonuses
-            pass
+            raise ValueError(f"Unknown bonus type: {bonus_type}")
 
         self.image = pygame.image.load(path)
         self.image = pygame.transform.scale(self.image, (self.settings.bonus_width, self.settings.bonus_height))

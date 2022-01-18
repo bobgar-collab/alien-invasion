@@ -16,6 +16,7 @@ from sound_manager import SoundManager
 
 # Events
 ALIENS_FIRE_EVENT = pygame.USEREVENT + 1
+DISABLE_FIRE_BONUS = pygame.USEREVENT + 2
 
 
 class AlienInvasion:
@@ -184,7 +185,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
-            # TODO
+            self.bonuses.empty()
             self.aliens_bullets.empty()
             self.bullets.empty()
 
@@ -222,6 +223,8 @@ class AlienInvasion:
                 self._check_play_button(mouse_pos)
             elif event.type == ALIENS_FIRE_EVENT:
                 self._aliens_fire()
+            elif event.type == DISABLE_FIRE_BONUS:
+                self.settings.ship_fire_bonus = False
 
     def _aliens_fire(self):
         if self.stats.game_active == True:
@@ -242,7 +245,7 @@ class AlienInvasion:
             self.scoreboard.prep_ships()
 
             self.aliens.empty()
-            # TODO
+            self.bonuses.empty()
             self.aliens_bullets.empty()
             self.bullets.empty()
 
@@ -256,9 +259,6 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
-        # elif event.key == pygame.K_c:
-        #     for alien in self.aliens:
-        #         self._alien_fire_bullet(alien)
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
 
@@ -269,8 +269,13 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path)
-            self.bullets.add(new_bullet)
+            if self.settings.ship_fire_bonus:
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 30, self.settings.bullet_img_path))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, self.settings.bullet_img_path))
+            else:
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path))
+
             self.sound.play('shot')
 
     def _check_keyup_events(self, event):
@@ -315,7 +320,12 @@ class AlienInvasion:
 
     def _add_bonus(self, alien_rect):
         if random.randint(1, 10) == 1:
-            new_bonus = Bonus(self, alien_rect.midbottom, "LIFE")
+            bonus_type: str
+            if random.randint(1, 2) == 1:
+                bonus_type = "LIFE"
+            else:
+                bonus_type = "FIRE"
+            new_bonus = Bonus(self, alien_rect.midbottom, bonus_type)
             self.bonuses.add(new_bonus)
 
     def _check_bonus_collisions(self):
@@ -323,12 +333,21 @@ class AlienInvasion:
 
         if collisions:
             for bonus in collisions:
-                # Life
-                if self.settings.ship_limit >= self.stats.ships_left:
+                bonus_type: str = bonus.bonus_type
+                if bonus_type == "LIFE":
+                    # Life
+                    if self.settings.ship_limit >= self.stats.ships_left:
+                        self.bonuses.remove(bonus)
+                        self.bonus_life()
+                elif bonus_type == "FIRE":
+                    # if not self.settings.ship_fire_bonus:
                     self.bonuses.remove(bonus)
-                    self.life()
+                    self.settings.ship_fire_bonus = True
+                    pygame.time.set_timer(DISABLE_FIRE_BONUS, 10000)
+                else:
+                    raise ValueError(f"Unknown bonus type: {bonus.bonus_type}")
 
-    def life(self):
+    def bonus_life(self):
         self.stats.ships_left += 1
         self.scoreboard.prep_ships()
 
