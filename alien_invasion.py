@@ -70,6 +70,8 @@ class AlienInvasion:
             self.settings.delta_time = 11
 
             self._check_events()
+
+            # TODO if state 'PLAY' (1)
             if self.stats.game_active:
                 self.background.update()
                 self.ship.update()
@@ -197,6 +199,7 @@ class AlienInvasion:
             # Making the script wait for 2 seconds
             pygame.time.delay(2000)
         else:
+            # TODO Set state 'STOP' (3)
             self.stats.game_active = False
 
     def _check_fleet_edges(self):
@@ -235,9 +238,8 @@ class AlienInvasion:
             self._alien_fire_bullet(alien)
 
     def call_play_button(self):
+        # TODO IF self.stats.game_active 'STOP' call commented code
         self.settings.initialize_dynamic_settings()
-        self.stats.reset_stats()
-        self.stats.game_active = True
 
         self.scoreboard.prep_score()
         self.scoreboard.prep_level()
@@ -251,6 +253,10 @@ class AlienInvasion:
         self._create_fleet()
         self.ship.center_ship()
 
+        self.stats.reset_stats()
+        # TODO set to 'PLAY' (1)
+        self.stats.game_active = True
+
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
@@ -259,8 +265,8 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_ESCAPE:
-            # TODO Return to the main menu !!!
-            self.game_active = False
+            # TODO Set state 'PAUSE' (2)
+            self.stats.game_active = False
 
     def _alien_fire_bullet(self, alien):
         new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
