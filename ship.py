@@ -8,15 +8,21 @@ class Ship(Sprite):
     def __init__(self, ai_game):
         super().__init__()
 
-        self.anim_offset_x = 0
-        self.anim_offset_y = 30
+        self.anim_offset_x = 3
+        self.anim_offset_y = 35
 
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
         self.show_ship_img()
-        self.jet = Animation(self.screen, 200, (50, 50))
+        self.jet = Animation(self.screen, 100, (35, 45), [
+            'images/jet-anim/jet_1_1.png',
+            'images/jet-anim/jet_1_2.png',
+            'images/jet-anim/jet_1_3.png',
+            'images/jet-anim/jet_1_4.png',
+            'images/jet-anim/jet_1_5.png',
+        ])
 
         self.rect = self.image.get_rect()
         self.jet_rect = self.jet.get_rect()
@@ -35,7 +41,7 @@ class Ship(Sprite):
         self.rect.midbottom = [x + self.anim_offset_x, y + self.anim_offset_y]
 
     def show_ship_img(self):
-        self.image = pygame.image.load('images/ship.png')
+        self.image = pygame.image.load('images/ship_2_1.png')
         self.image = pygame.transform.scale(self.image, (80, 80))
 
     def show_explosion_ship_img(self):

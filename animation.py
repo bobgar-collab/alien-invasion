@@ -3,16 +3,11 @@ import pygame
 
 class Animation(pygame.sprite.Sprite):
 
-    def __init__(self, screen, fps_time: int, scale_factor: tuple):
+    def __init__(self, screen, fps_time: int, scale_factor: tuple, sources: list):
         super(Animation, self).__init__()
 
         self.screen = screen
         self.fps_time = fps_time
-
-        sources = [
-            'images/explosion.png',
-            'images/explosion_1.png'
-        ]
 
         self.images = []
         for path in sources:

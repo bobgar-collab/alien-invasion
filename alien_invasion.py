@@ -3,7 +3,7 @@ import sys
 
 import pygame
 
-import screen_background as sb
+import menu as sb
 from alien import Alien
 from bonus import Bonus
 from bullet import Bullet
@@ -37,7 +37,8 @@ class AlienInvasion:
 
         pygame.display.set_caption("Alien Invasion")
 
-        self.background = sb.ScreenBackground(self)
+        self.background = sb.Menu(self)
+        self.menu = sb.Menu(self)
         self.stats = GameStats(self)
         self.scoreboard = Scoreboard(self)
 
@@ -49,6 +50,7 @@ class AlienInvasion:
         self.bonuses = pygame.sprite.Group()
 
         self.play_button = Button(self, "Play Now")
+        self.close_button = Button(self, "Close")
 
         self.sound = SoundManager()
         self.sound.play_music()
@@ -221,6 +223,7 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+                self._check_close_button(mouse_pos)
             elif event.type == ALIENS_FIRE_EVENT:
                 self._aliens_fire()
             elif event.type == DISABLE_FIRE_BONUS:
@@ -251,6 +254,11 @@ class AlienInvasion:
 
             self._create_fleet()
             self.ship.center_ship()
+
+    def _check_close_button(self, mouse_pos):
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
+            sys.exit()
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -304,6 +312,7 @@ class AlienInvasion:
 
         if not self.stats.game_active:
             self.play_button.draw_button()
+            self.close_button.draw_button()
 
         pygame.display.flip()
 
