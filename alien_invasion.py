@@ -7,9 +7,9 @@ import menu as sb
 from alien import Alien
 from bonus import Bonus
 from bullet import Bullet
-from button import Button
 from game_stats import GameStats
 from scoreboard import Scoreboard
+from screen_background import ScreenBackground
 from settings import Settings
 from ship import Ship
 from sound_manager import SoundManager
@@ -37,10 +37,11 @@ class AlienInvasion:
 
         pygame.display.set_caption("Alien Invasion")
 
-        self.background = sb.Menu(self)
-        self.menu = sb.Menu(self)
+        self.background = ScreenBackground(self)
         self.stats = GameStats(self)
         self.scoreboard = Scoreboard(self)
+
+        self.menu = sb.Menu(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -48,9 +49,6 @@ class AlienInvasion:
         self.aliens_bullets = pygame.sprite.Group()
         self.aliens_bullet_last_tick = 0
         self.bonuses = pygame.sprite.Group()
-
-        self.play_button = Button(self, "Play Now")
-        self.close_button = Button(self, "Close")
 
         self.sound = SoundManager()
         self.sound.play_music()
@@ -78,6 +76,8 @@ class AlienInvasion:
                 self._update_aliens()
                 self._update_bullets()
                 self._update_bonuses()
+            else:
+                self.menu.update()
 
             self._update_screen()
 
@@ -221,9 +221,7 @@ class AlienInvasion:
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                self._check_play_button(mouse_pos)
-                self._check_close_button(mouse_pos)
+                self.menu.check_mouse_events()
             elif event.type == ALIENS_FIRE_EVENT:
                 self._aliens_fire()
             elif event.type == DISABLE_FIRE_BONUS:
@@ -236,29 +234,22 @@ class AlienInvasion:
             alien = self.aliens.sprites()[random_index]
             self._alien_fire_bullet(alien)
 
-    def _check_play_button(self, mouse_pos):
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
-            self.settings.initialize_dynamic_settings()
-            self.stats.reset_stats()
-            self.stats.game_active = True
+    def call_play_button(self):
+        self.settings.initialize_dynamic_settings()
+        self.stats.reset_stats()
+        self.stats.game_active = True
 
-            self.scoreboard.prep_score()
-            self.scoreboard.prep_level()
-            self.scoreboard.prep_ships()
+        self.scoreboard.prep_score()
+        self.scoreboard.prep_level()
+        self.scoreboard.prep_ships()
 
-            self.aliens.empty()
-            self.bonuses.empty()
-            self.aliens_bullets.empty()
-            self.bullets.empty()
+        self.aliens.empty()
+        self.bonuses.empty()
+        self.aliens_bullets.empty()
+        self.bullets.empty()
 
-            self._create_fleet()
-            self.ship.center_ship()
-
-    def _check_close_button(self, mouse_pos):
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
-            sys.exit()
+        self._create_fleet()
+        self.ship.center_ship()
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -268,6 +259,7 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_ESCAPE:
+            # TODO Return to the main menu !!!
             sys.exit()
 
     def _alien_fire_bullet(self, alien):
@@ -293,26 +285,29 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _update_screen(self):
-        self.background.draw_background()
-        self.ship.draw_ship()
-        self.aliens.draw(self.screen)
-        self.scoreboard.show_score()
+        if self.stats.game_active:
+            # PLAY
 
-        bullet: Bullet
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
+            self.background.draw_background()
+            self.ship.draw_ship()
+            self.aliens.draw(self.screen)
+            self.scoreboard.show_score()
 
-        bullet: Bullet
-        for bullet in self.aliens_bullets.sprites():
-            bullet.draw_bullet()
+            bullet: Bullet
+            for bullet in self.bullets.sprites():
+                bullet.draw_bullet()
 
-        bonus: Bonus
-        for bonus in self.bonuses.sprites():
-            bonus.draw_bonus()
+            bullet: Bullet
+            for bullet in self.aliens_bullets.sprites():
+                bullet.draw_bullet()
 
-        if not self.stats.game_active:
-            self.play_button.draw_button()
-            self.close_button.draw_button()
+            bonus: Bonus
+            for bonus in self.bonuses.sprites():
+                bonus.draw_bonus()
+        else:
+            # MENU
+
+            self.menu.draw_background()
 
         pygame.display.flip()
 
