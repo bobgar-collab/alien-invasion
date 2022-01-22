@@ -13,7 +13,8 @@ class Menu:
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        self.bg_image = pygame.image.load(self.settings.bg_image_path)
+        # self.bg_image = pygame.image.load(self.settings.bg_image_path)
+        self.bg_image = pygame.image.load("images/menu.png")
         self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
 
@@ -34,7 +35,7 @@ class Menu:
             self.ai_game.call_play_button()
 
     def _check_close_button(self, mouse_pos):
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        button_clicked = self.close_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
             sys.exit()
 
