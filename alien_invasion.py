@@ -260,7 +260,7 @@ class AlienInvasion:
             self._fire_bullet()
         elif event.key == pygame.K_ESCAPE:
             # TODO Return to the main menu !!!
-            sys.exit()
+            self.game_active = False
 
     def _alien_fire_bullet(self, alien):
         new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
