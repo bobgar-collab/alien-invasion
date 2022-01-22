@@ -33,12 +33,12 @@ class Menu:
 
     def _check_play_button(self, mouse_pos):
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
+        if button_clicked:  # and not self.stats.game_state:
             self.ai_game.call_play_button()
 
     def _check_close_button(self, mouse_pos):
         button_clicked = self.exit_button.rect.collidepoint(mouse_pos)
-        if button_clicked and not self.stats.game_active:
+        if button_clicked:  # and not self.stats.game_state:
             sys.exit()
 
     def update(self):

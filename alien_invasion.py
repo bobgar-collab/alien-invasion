@@ -13,6 +13,7 @@ from screen_background import ScreenBackground
 from settings import Settings
 from ship import Ship
 from sound_manager import SoundManager
+from game_state import GameState
 
 # Events
 ALIENS_FIRE_EVENT = pygame.USEREVENT + 1
@@ -71,8 +72,7 @@ class AlienInvasion:
 
             self._check_events()
 
-            # TODO if state 'PLAY' (1)
-            if self.stats.game_active:
+            if self.stats.game_state == GameState.PLAY:
                 self.background.update()
                 self.ship.update()
                 self._update_aliens()
@@ -199,8 +199,8 @@ class AlienInvasion:
             # Making the script wait for 2 seconds
             pygame.time.delay(2000)
         else:
-            # TODO Set state 'STOP' (3)
-            self.stats.game_active = False
+            # TODO set to RECORDS statistic
+            self.stats.game_state = GameState.STOP
 
     def _check_fleet_edges(self):
         alien: Alien
@@ -231,31 +231,30 @@ class AlienInvasion:
                 self.settings.ship_fire_bonus = False
 
     def _aliens_fire(self):
-        if self.stats.game_active == True:
+        if self.stats.game_state == GameState.PLAY:
             aliens_count = len(self.aliens)
             random_index = random.randint(0, aliens_count - 1)
             alien = self.aliens.sprites()[random_index]
             self._alien_fire_bullet(alien)
 
     def call_play_button(self):
-        # TODO IF self.stats.game_active 'STOP' call commented code
-        self.settings.initialize_dynamic_settings()
+        if self.stats.game_state == GameState.STOP:
+            self.settings.initialize_dynamic_settings()
+            self.stats.reset_stats()
 
-        self.scoreboard.prep_score()
-        self.scoreboard.prep_level()
-        self.scoreboard.prep_ships()
+            self.scoreboard.prep_score()
+            self.scoreboard.prep_level()
+            self.scoreboard.prep_ships()
 
-        self.aliens.empty()
-        self.bonuses.empty()
-        self.aliens_bullets.empty()
-        self.bullets.empty()
+            self.aliens.empty()
+            self.bonuses.empty()
+            self.aliens_bullets.empty()
+            self.bullets.empty()
 
-        self._create_fleet()
-        self.ship.center_ship()
+            self._create_fleet()
+            self.ship.center_ship()
 
-        self.stats.reset_stats()
-        # TODO set to 'PLAY' (1)
-        self.stats.game_active = True
+        self.stats.game_state = GameState.PLAY
 
     def _check_keydown_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -265,8 +264,7 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_ESCAPE:
-            # TODO Set state 'PAUSE' (2)
-            self.stats.game_active = False
+            self.stats.game_state = GameState.PAUSE
 
     def _alien_fire_bullet(self, alien):
         new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
@@ -291,7 +289,7 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _update_screen(self):
-        if self.stats.game_active:
+        if self.stats.game_state == GameState.PLAY:
             # PLAY
 
             self.background.draw_background()

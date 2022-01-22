@@ -1,3 +1,4 @@
+from game_state import GameState
 from utils import load_dictionary, save_dictionary
 
 
@@ -21,7 +22,7 @@ class GameStats():
         save_dictionary(self.settings.record_file_path, data)
 
     def reset_stats(self):
-        self.game_active = False
+        self.game_state = GameState.STOP
         self.ships_left = self.settings.ship_limit
         self.score = 0
         self.level = 1
