@@ -58,7 +58,7 @@ class AlienInvasion:
         clock = pygame.time.Clock()
 
         # Events
-        pygame.time.set_timer(ALIENS_FIRE_EVENT, 5000)
+        pygame.time.set_timer(ALIENS_FIRE_EVENT, 3000)
 
         # Main loop
         while True:
@@ -78,6 +78,7 @@ class AlienInvasion:
                 self._update_aliens()
                 self._update_bullets()
                 self._update_bonuses()
+            # elif:  # TODO set to RECORDS statistic
             else:
                 self.menu.update()
 
@@ -200,6 +201,10 @@ class AlienInvasion:
             pygame.time.delay(2000)
         else:
             # TODO set to RECORDS statistic
+
+            # Making the script wait for 2 seconds
+            pygame.time.delay(2000)
+
             self.stats.game_state = GameState.STOP
 
     def _check_fleet_edges(self):
