@@ -6,7 +6,7 @@ class ScreenBackground:
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        self.bg_image = pygame.image.load(self.settings.bg_image_path)
+        self.bg_image = pygame.image.load(self.settings.game_bg_path)
         self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
         self.rect_b = self.screen.get_rect()

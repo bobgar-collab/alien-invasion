@@ -15,7 +15,10 @@ class Settings:
         self.full_screen = self.config_dict["full_screen"]
         self.screen_width = self.config_dict["screen_width"]
         self.screen_height = self.config_dict["screen_height"]
-        self.bg_image_path = self.config_dict["bg_image_path"]
+
+        self.menu_bg_path = self.config_dict["menu_bg_path"]
+
+        self.game_bg_path = self.config_dict["game_bg_path"]
 
         # TODO Move to config file
         # Параметры бонуса

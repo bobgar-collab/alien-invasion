@@ -4,7 +4,10 @@
   "full_screen": true,
   "screen_width": 1280,
   "screen_height": 720,
-  "bg_image_path": "images/menu/menu_bg.png",
+
+  "menu_bg_path": "images/menu/menu_bg.png",
+
+  "game_bg_path": "images/game_bg.jpg",
 
   "bullet_width": 15,
   "bullet_height": 45,
