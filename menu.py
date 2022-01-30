@@ -14,7 +14,7 @@ class Menu:
         self.settings = ai_game.settings
 
         # self.bg_image = pygame.image.load(self.settings.bg_image_path)
-        self.bg_image = pygame.image.load("images/menu.png")
+        self.bg_image = pygame.image.load("images/menu_bg.png")
         self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
 

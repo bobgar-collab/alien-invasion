@@ -26,6 +26,7 @@ class Ship(Sprite):
 
         self.rect = self.image.get_rect()
         self.jet_rect = self.jet.get_rect()
+        self.show_jet = True
 
         self._init_position()
 
@@ -43,10 +44,12 @@ class Ship(Sprite):
     def show_ship_img(self):
         self.image = pygame.image.load('images/ship_2_1.png')
         self.image = pygame.transform.scale(self.image, (80, 80))
+        self.show_jet = True
 
     def show_explosion_ship_img(self):
         self.image = pygame.image.load('images/explosion.png')
         self.image = pygame.transform.scale(self.image, (80, 80))
+        self.show_jet = False
 
     def update(self):
         self.jet.update()
@@ -63,7 +66,8 @@ class Ship(Sprite):
 
     def draw_ship(self):
         self.screen.blit(self.image, self.rect)
-        self.jet.draw_animation()
+        if self.show_jet:
+            self.jet.draw_animation()
 
     def center_ship(self):
         self._init_position()

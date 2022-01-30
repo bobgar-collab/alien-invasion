@@ -11,7 +11,7 @@
   },
   {
    "optionDest": "onefile",
-   "value": false
+   "value": true
   },
   {
    "optionDest": "console",
@@ -67,11 +67,15 @@
   },
   {
    "optionDest": "datas",
+   "value": "D:/PythonProjects/alien-invasion/data;data/"
+  },
+  {
+   "optionDest": "datas",
    "value": "D:/PythonProjects/alien-invasion/images;images/"
   },
   {
    "optionDest": "datas",
-   "value": "D:/PythonProjects/alien-invasion/data;data/"
+   "value": "D:/PythonProjects/alien-invasion/sound;sound/"
   }
  ],
  "nonPyinstallerOptions": {

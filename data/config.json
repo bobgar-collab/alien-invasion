@@ -1,7 +1,7 @@
 {
   "record_file_path": "data/records.json",
 
-  "full_screen": false,
+  "full_screen": true,
   "screen_width": 1280,
   "screen_height": 720,
   "bg_image_path": "images/space_bg2.jpg.",
