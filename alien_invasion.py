@@ -42,6 +42,9 @@ class AlienInvasion:
         self.stats = GameStats(self)
         self.scoreboard = Scoreboard(self)
 
+        self.sound = SoundManager()
+        self.sound.play_music()
+
         self.menu = sb.Menu(self)
 
         self.ship = Ship(self)
@@ -50,9 +53,6 @@ class AlienInvasion:
         self.aliens_bullets = pygame.sprite.Group()
         self.aliens_bullet_last_tick = 0
         self.bonuses = pygame.sprite.Group()
-
-        self.sound = SoundManager()
-        self.sound.play_music()
 
     def run_game(self):
         clock = pygame.time.Clock()
@@ -228,6 +228,8 @@ class AlienInvasion:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEMOTION:
+                self.menu.check_mouse_motion_event(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.menu.check_mouse_events()
             elif event.type == ALIENS_FIRE_EVENT:

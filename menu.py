@@ -3,28 +3,48 @@ import sys
 import pygame
 
 import alien_invasion as ai
-from button import Button
+from button_menu import ButtonMenu
 
 
 class Menu:
     def __init__(self, ai_game: ai.AlienInvasion):
         self.ai_game = ai_game
         self.stats = ai_game.stats
+        self.sound = ai_game.sound
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        # self.bg_image = pygame.image.load(self.settings.bg_image_path)
-        self.bg_image = pygame.image.load("images/menu_bg.png")
+        self.bg_image = pygame.image.load(self.settings.bg_image_path)
         self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
 
         screenCenterX, screenCenterY = self.screen.get_rect().center
-        w = 250
-        h = 50
+        w = 280
+        h = 60
         play_button_pos = (screenCenterX, screenCenterY - 50)
         exit_button_pos = (screenCenterX, screenCenterY + 50)
-        self.play_button = Button(self, "Play Now", w, h, play_button_pos)
-        self.exit_button = Button(self, "Exit Game", w, h, exit_button_pos)
+        # self.play_button = Button(self, "Play Now", w, h, play_button_pos)
+        # self.exit_button = Button(self, "Exit Game", w, h, exit_button_pos)
+        self.play_button = ButtonMenu(self,
+                                      "images/menu/menu_btn_play.png",
+                                      "images/menu/menu_btn_play_focus.png",
+                                      w, h, play_button_pos)
+        self.exit_button = ButtonMenu(self,
+                                      "images/menu/menu_btn_exit.png",
+                                      "images/menu/menu_btn_exit_focus.png",
+                                      w, h, exit_button_pos)
+
+    def check_mouse_motion_event(self, event):
+        mouse_pos = event.pos
+        self._check_button_focus(self.play_button, mouse_pos)
+        self._check_button_focus(self.exit_button, mouse_pos)
+
+    def _check_button_focus(self, button, mouse_pos):
+        focused = button.rect.collidepoint(mouse_pos)
+        if button.focused != focused:
+            button.focused = focused
+            if button.focused:
+                self.sound.play('shot')
 
     def check_mouse_events(self):
         mouse_pos = pygame.mouse.get_pos()

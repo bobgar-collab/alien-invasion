@@ -4,7 +4,7 @@
   "full_screen": true,
   "screen_width": 1280,
   "screen_height": 720,
-  "bg_image_path": "images/space_bg2.jpg.",
+  "bg_image_path": "images/menu/menu_bg.png",
 
   "bullet_width": 15,
   "bullet_height": 45,
