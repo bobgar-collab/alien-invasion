@@ -5,7 +5,7 @@ import pygame
 
 import menu as sb
 from alien import Alien
-from bonus import Bonus
+from bonus import Bonus, BonusType
 from bullet import Bullet
 from game_stats import GameStats
 from scoreboard import Scoreboard
@@ -337,15 +337,15 @@ class AlienInvasion:
 
     def _add_bonus(self, alien_rect):
         if random.randint(1, 10) == 1:
-            bonus_type = None
+            bonus_type: BonusType = None
             if random.randint(1, 3) == 1:
-                bonus_type = "LIFE"
-            elif random.randint(1, 3) == 2:
-                bonus_type = "FIRE"
-            elif random.randint(1, 3) == 3:
-                bonus_type = "MUSHROOM_STYLE"
+                bonus_type = BonusType.LIFE
+            elif random.randint(1, 3) == 1:
+                bonus_type = BonusType.FIRE
+            elif random.randint(1, 3) == 1:
+                bonus_type = BonusType.MUSHROOM_STYLE
 
-            if bonus_type:
+            if bonus_type is not None:
                 new_bonus = Bonus(self, alien_rect.midbottom, bonus_type)
                 self.bonuses.add(new_bonus)
 
@@ -354,18 +354,18 @@ class AlienInvasion:
 
         if collisions:
             for bonus in collisions:
-                bonus_type: str = bonus.bonus_type
-                if bonus_type == "LIFE":
+                bonus_type: BonusType = bonus.bonus_type
+                if bonus_type == BonusType.LIFE:
                     # Life
                     if self.settings.ship_limit >= self.stats.ships_left:
                         self.bonuses.remove(bonus)
                         self.bonus_life()
-                elif bonus_type == "FIRE":
+                elif bonus_type == BonusType.FIRE:
                     # if not self.settings.ship_fire_bonus:
                     self.bonuses.remove(bonus)
                     self.settings.ship_fire_bonus = True
                     pygame.time.set_timer(DISABLE_FIRE_BONUS, 10000)
-                elif bonus_type == "MUSHROOM_STYLE":
+                elif bonus_type == BonusType.MUSHROOM_STYLE:
                     self.bonuses.remove(bonus)
                     # TODO handle MUSHROOM_STYLE bonus!!!!
                 else:
