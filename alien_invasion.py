@@ -246,6 +246,7 @@ class AlienInvasion:
 
     def call_play_button(self):
         if self.stats.game_state == GameState.STOP:
+            self.background.reset_state()
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
 
