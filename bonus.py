@@ -3,6 +3,8 @@ from enum import Enum
 import pygame
 from pygame.sprite import Sprite
 
+from utils import load_image
+
 
 class BonusType(Enum):
     LIFE = "LIFE"
@@ -30,8 +32,7 @@ class Bonus(Sprite):
         else:
             raise ValueError(f"Unknown bonus type: {bonus_type}")
 
-        self.image = pygame.image.load(path)
-        self.image = pygame.transform.scale(self.image, (self.settings.bonus_width, self.settings.bonus_height))
+        self.image = load_image(path, (self.settings.bonus_width, self.settings.bonus_height))
         self.rect = self.image.get_rect()
 
         self.rect.midtop = start_pos

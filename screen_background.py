@@ -1,4 +1,4 @@
-import pygame
+from utils import load_image
 
 
 class ScreenBackground():
@@ -8,11 +8,9 @@ class ScreenBackground():
 
         # Show only on Start a new game
         self.show_bg_menu = True
-        self.bg_menu = pygame.image.load(self.settings.menu_bg_path)
-        self.bg_menu = pygame.transform.scale(self.bg_menu, (self.screen.get_rect().w, self.screen.get_rect().h))
+        self.bg_menu = load_image(self.settings.menu_bg_path, (self.screen.get_rect().w, self.screen.get_rect().h))
 
-        self.bg_image = pygame.image.load(self.settings.game_bg_path)
-        self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
+        self.bg_image = load_image(self.settings.game_bg_path, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
         self.rect_b = self.screen.get_rect()
         self.h = self.screen.get_rect().h

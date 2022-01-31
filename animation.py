@@ -1,5 +1,7 @@
 import pygame
 
+from utils import load_image
+
 
 class Animation():
 
@@ -9,8 +11,7 @@ class Animation():
 
         self.images = []
         for path in sources:
-            img = pygame.image.load(path)
-            img = pygame.transform.scale(img, scale_factor)
+            img = load_image(path, scale_factor)
             self.images.append(img)
 
         self.index = 0

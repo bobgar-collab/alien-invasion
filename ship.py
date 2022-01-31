@@ -1,6 +1,7 @@
-import pygame
 from pygame.sprite import Sprite
+
 from animation import Animation
+from utils import load_image
 
 
 class Ship(Sprite):
@@ -42,13 +43,11 @@ class Ship(Sprite):
         self.rect.midbottom = [x + self.anim_offset_x, y + self.anim_offset_y]
 
     def show_ship_img(self):
-        self.image = pygame.image.load('images/ship_2_1.png')
-        self.image = pygame.transform.scale(self.image, (80, 80))
+        self.image = load_image('images/ship_2_1.png', (80, 80))
         self.show_jet = True
 
     def show_explosion_ship_img(self):
-        self.image = pygame.image.load('images/explosion.png')
-        self.image = pygame.transform.scale(self.image, (80, 80))
+        self.image = load_image('images/explosion.png', (80, 80))
         self.show_jet = False
 
     def update(self):

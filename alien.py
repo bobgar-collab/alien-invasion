@@ -1,5 +1,6 @@
-import pygame
 from pygame.sprite import Sprite
+
+from utils import load_image
 
 
 class Alien(Sprite):
@@ -10,13 +11,10 @@ class Alien(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        self.image = pygame.image.load('images/pixilart-drawing (1).png')
-        self.image = pygame.transform.scale(self.image, (
-            self.settings.alien_width,
-            self.settings.alien_height
-        ))
-        self.rect = self.image.get_rect()
+        path = 'images/pixilart-drawing (1).png'
+        self.image = load_image(path, (self.settings.alien_width, self.settings.alien_height))
 
+        self.rect = self.image.get_rect()
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 

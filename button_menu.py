@@ -1,5 +1,7 @@
 import pygame.font
 
+from utils import load_image
+
 
 class ButtonMenu():
 
@@ -8,12 +10,8 @@ class ButtonMenu():
 
         self.focused = False
 
-        # Default image
-        self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image, (width, height))
-        # Focused image
-        self.imageFocused = pygame.image.load(image_focused_path)
-        self.imageFocused = pygame.transform.scale(self.imageFocused, (width, height))
+        self.image = load_image(image_path, (width, height))
+        self.imageFocused = load_image(image_focused_path, (width, height))
 
         # Построение объекта rect кнопки и выравнивание по центру экрана.
         self.rect = pygame.Rect(0, 0, width, height)

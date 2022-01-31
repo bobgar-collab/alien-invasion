@@ -5,6 +5,7 @@ import pygame
 import alien_invasion as ai
 from button_menu import ButtonMenu
 from game_state import GameState
+from utils import load_image
 
 
 class Menu:
@@ -15,8 +16,7 @@ class Menu:
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        self.bg_image = pygame.image.load(self.settings.menu_bg_path)
-        self.bg_image = pygame.transform.scale(self.bg_image, (self.screen.get_rect().w, self.screen.get_rect().h))
+        self.bg_image = load_image(self.settings.menu_bg_path, (self.screen.get_rect().w, self.screen.get_rect().h))
         self.rect_a = self.screen.get_rect()
 
         screenCenterX, screenCenterY = self.screen.get_rect().center
