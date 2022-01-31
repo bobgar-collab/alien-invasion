@@ -1,0 +1,89 @@
+class Struct:
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+
+class StyleManager():
+
+    def __init__(self, ai_game):
+        self.screen_rect = ai_game.screen.get_rect()
+        self.default = {
+            "game_bg": {
+                "path": "images/game_bg.jpg",
+                "width": self.screen_rect.w,
+                "height": self.screen_rect.h
+            },
+            "menu_bg": {
+                "path": "images/menu/menu_bg.png",
+                "width": self.screen_rect.w,
+                "height": self.screen_rect.h
+            },
+            # play_button
+            "menu_play_button": {
+                "path": "images/menu/menu_btn_play.png",
+                "width": 280,
+                "height": 60
+            },
+            "menu_play_button_focus": {
+                "path": "images/menu/menu_btn_play_focus.png",
+                "width": 280,
+                "height": 60
+            },
+            # exit_button
+            "menu_exit_button": {
+                "path": "images/menu/menu_btn_exit.png",
+                "width": 280,
+                "height": 60
+            },
+            "menu_exit_button_focus": {
+                "path": "images/menu/menu_btn_exit_focus.png",
+                "width": 280,
+                "height": 60
+            },
+            "alien": {
+                "path": "images/pixilart-drawing (1).png",
+                "width": 80,
+                "height": 80
+            },
+            "ship": {
+                "path": "images/ship_2_1.png",
+                "width": 80,
+                "height": 80
+            },
+            "explosion": {
+                "path": "images/explosion.png",
+                "width": 80,
+                "height": 80
+            },
+            # bullet
+            "bullet": {
+                "path": "images/bullet.png",
+                "width": 15,
+                "height": 45
+            },
+            "bullet_green": {
+                "path": "images/bullet_green.png",
+                "width": 15,
+                "height": 45
+            },
+            # bonus
+            "bonus_life": {
+                "path": "images/pngwing.com.png",
+                "width": 70,
+                "height": 70
+            },
+            "bonus_fire": {
+                "path": "images/bullet.png",
+                "width": 70,
+                "height": 70
+            },
+            "bonus_mushroom_style": {
+                "path": "images/mushroom_style.png",
+                "width": 70,
+                "height": 70
+            }
+        }
+
+    def get_style(self, key: str) -> Struct:
+        item = self.default[key]
+        return Struct(**item)

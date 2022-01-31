@@ -16,6 +16,8 @@ from sound_manager import SoundManager
 from game_state import GameState
 
 # Events
+from style_manager import StyleManager
+
 ALIENS_FIRE_EVENT = pygame.USEREVENT + 1
 DISABLE_FIRE_BONUS = pygame.USEREVENT + 2
 DISABLE_MUSHROOM_STYLE_BONUS = pygame.USEREVENT + 3
@@ -39,6 +41,7 @@ class AlienInvasion:
 
         pygame.display.set_caption("Alien Invasion")
 
+        self.style = StyleManager(self)
         self.background = ScreenBackground(self)
         self.stats = GameStats(self)
         self.scoreboard = Scoreboard(self)
@@ -276,18 +279,20 @@ class AlienInvasion:
             self.stats.game_state = GameState.PAUSE
 
     def _alien_fire_bullet(self, alien):
-        new_bullet = Bullet(self, alien.rect.midbottom, 180, self.settings.alien_bullet_img_path)
+        style = self.style.get_style("bullet_green")
+        new_bullet = Bullet(self, alien.rect.midbottom, 180, style)
         self.aliens_bullets.add(new_bullet)
         self.sound.play('shot')
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
+            style = self.style.get_style("bullet")
             if self.settings.ship_fire_bonus:
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path))
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 30, self.settings.bullet_img_path))
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, self.settings.bullet_img_path))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, style))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 30, style))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, style))
             else:
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, self.settings.bullet_img_path))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, style))
 
             self.sound.play('shot')
 

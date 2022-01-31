@@ -5,26 +5,10 @@
   "screen_width": 1280,
   "screen_height": 720,
 
-  "menu_bg_path": "images/menu/menu_bg.png",
-
-  "game_bg_path": "images/game_bg.jpg",
-
-  "bullet_width": 15,
-  "bullet_height": 45,
-  "bullet_img_path": "images/bullet.png",
-  "alien_bullet_img_path": "images/bullet_green.png",
-
-  "bonus_width": 80,
-  "bonus_height": 80,
   "bonus_speed": 1,
-  "bonus_life_img_path": "images/pngwing.com.png",
-  "bonus_fire_img_path": "images/bullet.png",
-  "bonus_mushroom_style_img_path": "images/mushroom_style.png",
 
   "bullets_allowed": 5,
   "ship_limit": 3,
-  "alien_width": 80,
-  "alien_height": 80,
   "fleet_drop_speed": 10,
   "fleet_direction": 1,
   "speedup_scale": 1.1,

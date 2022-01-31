@@ -15,25 +15,23 @@ class Menu:
         self.sound = ai_game.sound
         self.screen = ai_game.screen
         self.settings = ai_game.settings
+        self.style = ai_game.style
 
-        self.bg_image = load_image(self.settings.menu_bg_path, (self.screen.get_rect().w, self.screen.get_rect().h))
-        self.rect_a = self.screen.get_rect()
+        style = self.style.get_style("menu_bg")
+        self.image = load_image(style.path, (style.width, style.height))
+        self.rect = self.screen.get_rect()
+
+        play_button_style = self.style.get_style("menu_play_button")
+        play_button_focus_style = self.style.get_style("menu_play_button_focus")
+        exit_button_style = self.style.get_style("menu_exit_button")
+        exit_button_focus_style = self.style.get_style("menu_exit_button_focus")
 
         screenCenterX, screenCenterY = self.screen.get_rect().center
-        w = 280
-        h = 60
         play_button_pos = (screenCenterX, screenCenterY - 50)
         exit_button_pos = (screenCenterX, screenCenterY + 50)
-        # self.play_button = Button(self, "Play Now", w, h, play_button_pos)
-        # self.exit_button = Button(self, "Exit Game", w, h, exit_button_pos)
-        self.play_button = ButtonMenu(self,
-                                      "images/menu/menu_btn_play.png",
-                                      "images/menu/menu_btn_play_focus.png",
-                                      w, h, play_button_pos)
-        self.exit_button = ButtonMenu(self,
-                                      "images/menu/menu_btn_exit.png",
-                                      "images/menu/menu_btn_exit_focus.png",
-                                      w, h, exit_button_pos)
+
+        self.play_button = ButtonMenu(self, play_button_style, play_button_focus_style, play_button_pos)
+        self.exit_button = ButtonMenu(self, exit_button_style, exit_button_focus_style, exit_button_pos)
 
     def check_mouse_motion_event(self, event):
         if self.stats.game_state == GameState.PLAY:
@@ -72,6 +70,6 @@ class Menu:
         pass
 
     def draw(self):  #
-        self.screen.blit(self.bg_image, self.rect_a)
+        self.screen.blit(self.image, self.rect)
         self.play_button.draw()
         self.exit_button.draw()

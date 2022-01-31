@@ -1,6 +1,5 @@
 from enum import Enum
 
-import pygame
 from pygame.sprite import Sprite
 
 from utils import load_image
@@ -20,23 +19,22 @@ class Bonus(Sprite):
         self.bonus_type = bonus_type
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        self.path = self.settings.bullet_img_path
+        self.style = ai_game.style
 
-        path: str
+        style = None
         if bonus_type == BonusType.LIFE:
-            path = self.settings.bonus_life_img_path
+            style = self.style.get_style("bonus_life")
         elif bonus_type == BonusType.FIRE:
-            path = self.settings.bonus_fire_img_path
+            style = self.style.get_style("bonus_fire")
         elif bonus_type == BonusType.MUSHROOM_STYLE:
-            path = self.settings.bonus_mushroom_style_img_path
+            style = self.style.get_style("bonus_mushroom_style")
         else:
             raise ValueError(f"Unknown bonus type: {bonus_type}")
 
-        self.image = load_image(path, (self.settings.bonus_width, self.settings.bonus_height))
+        self.image = load_image(style.path, (style.width, style.height))
+
         self.rect = self.image.get_rect()
-
         self.rect.midtop = start_pos
-
         self.y = float(self.rect.y)
 
     def update(self):

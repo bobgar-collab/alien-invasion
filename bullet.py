@@ -6,7 +6,7 @@ from utils import load_image
 
 class Bullet(Sprite):
 
-    def __init__(self, ai_game, start_pos, angle, path):
+    def __init__(self, ai_game, start_pos, angle, style):
         super().__init__()
 
         self.screen = ai_game.screen
@@ -14,7 +14,7 @@ class Bullet(Sprite):
 
         speed = self.settings.bullet_speed
 
-        self.image = load_image(path, (self.settings.bullet_width, self.settings.bullet_height), -angle)
+        self.image = load_image(style.path, (style.width, style.height), -angle)
 
         # start_pos is a center of the sprite.
         self.rect = self.image.get_rect(center=start_pos)

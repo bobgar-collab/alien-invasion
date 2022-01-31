@@ -15,6 +15,7 @@ class Ship(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
+        self.style = ai_game.style
 
         self.show_ship_img()
         self.jet = Animation(self.screen, 100, (35, 45), [
@@ -43,13 +44,13 @@ class Ship(Sprite):
         self.rect.midbottom = [x + self.anim_offset_x, y + self.anim_offset_y]
 
     def show_ship_img(self):
-        path = 'images/ship_2_1.png'
-        self.image = load_image(path, (80, 80))
+        style = self.style.get_style("ship")
+        self.image = load_image(style.path, (style.width, style.height))
         self.show_jet = True
 
     def show_explosion_ship_img(self):
-        path = 'images/explosion.png'
-        self.image = load_image(path, (80, 80))
+        style = self.style.get_style("explosion")
+        self.image = load_image(style.path, (style.width, style.height))
         self.show_jet = False
 
     def update(self):
