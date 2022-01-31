@@ -290,7 +290,6 @@ class AlienInvasion:
                 self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, "bullet"))
             else:
                 self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, "bullet"))
-
             self.sound.play('shot')
 
     def _check_keyup_events(self, event):

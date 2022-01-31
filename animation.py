@@ -8,7 +8,7 @@ class Animation():
         self.style = ai_game.style
         self.fps_time = fps_time
 
-        self.images = self.style.get_animation_images(name)
+        self.images = self.style.get_images(name)
 
         self.index = 0
         self.image = self.images[self.index]

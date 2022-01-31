@@ -105,13 +105,14 @@ class StyleManager():
 
     def get_image(self, key: str, angle: float = None) -> Surface:
         style = self.get_style(key)
-        return self._load_image(style.path, (style.width, style.height), angle)
+        image = self._load_image(style.path, (style.width, style.height), angle)
+        return image
 
-    def get_animation_images(self, key: str, angle: float = None) -> list:
-        animation = self.get_style(key)
+    def get_images(self, key: str, angle: float = None) -> list:
+        style = self.get_style(key)
         images = []
-        for path in animation.paths:
-            img = self._load_image(path, (animation.width, animation.height), angle)
+        for path in style.paths:
+            img = self._load_image(path, (style.width, style.height), angle)
             images.append(img)
         return images
 
