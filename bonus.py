@@ -17,6 +17,8 @@ class Bonus(Sprite):
             path = self.settings.bonus_life_img_path
         elif bonus_type == "FIRE":
             path = self.settings.bonus_fire_img_path
+        elif bonus_type == "MUSHROOM_STYLE":
+            path = self.settings.bonus_mushroom_style_img_path
         else:
             raise ValueError(f"Unknown bonus type: {bonus_type}")
 

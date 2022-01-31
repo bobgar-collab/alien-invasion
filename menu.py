@@ -4,6 +4,7 @@ import pygame
 
 import alien_invasion as ai
 from button_menu import ButtonMenu
+from game_state import GameState
 
 
 class Menu:
@@ -35,6 +36,9 @@ class Menu:
                                       w, h, exit_button_pos)
 
     def check_mouse_motion_event(self, event):
+        if self.stats.game_state == GameState.PLAY:
+            return
+
         mouse_pos = event.pos
         self._check_button_focus(self.play_button, mouse_pos)
         self._check_button_focus(self.exit_button, mouse_pos)
@@ -47,6 +51,9 @@ class Menu:
                 self.sound.play('shot')
 
     def check_mouse_events(self):
+        if self.stats.game_state == GameState.PLAY:
+            return
+
         mouse_pos = pygame.mouse.get_pos()
         self._check_play_button(mouse_pos)
         self._check_close_button(mouse_pos)

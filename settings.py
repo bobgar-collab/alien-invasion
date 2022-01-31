@@ -27,6 +27,7 @@ class Settings:
         self.bonus_speed = self.config_dict["bonus_speed"]
         self.bonus_life_img_path = self.config_dict["bonus_life_img_path"]
         self.bonus_fire_img_path = self.config_dict["bonus_fire_img_path"]
+        self.bonus_mushroom_style_img_path = self.config_dict["bonus_mushroom_style_img_path"]
 
         # Параметры пули
         self.bullet_width = self.config_dict["bullet_width"]
@@ -58,6 +59,7 @@ class Settings:
         self.alien_points = 10
 
         self.ship_fire_bonus = False
+        self.mushroom_style_bonus = False
 
     def increase_speed(self):
         self.bg_image_speed *= self.speedup_scale

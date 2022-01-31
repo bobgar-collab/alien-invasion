@@ -18,6 +18,7 @@ from game_state import GameState
 # Events
 ALIENS_FIRE_EVENT = pygame.USEREVENT + 1
 DISABLE_FIRE_BONUS = pygame.USEREVENT + 2
+DISABLE_MUSHROOM_STYLE_BONUS = pygame.USEREVENT + 3
 
 
 class AlienInvasion:
@@ -336,13 +337,17 @@ class AlienInvasion:
 
     def _add_bonus(self, alien_rect):
         if random.randint(1, 10) == 1:
-            bonus_type: str
-            if random.randint(1, 2) == 1:
+            bonus_type = None
+            if random.randint(1, 3) == 1:
                 bonus_type = "LIFE"
-            else:
+            elif random.randint(1, 3) == 2:
                 bonus_type = "FIRE"
-            new_bonus = Bonus(self, alien_rect.midbottom, bonus_type)
-            self.bonuses.add(new_bonus)
+            elif random.randint(1, 3) == 3:
+                bonus_type = "MUSHROOM_STYLE"
+
+            if bonus_type:
+                new_bonus = Bonus(self, alien_rect.midbottom, bonus_type)
+                self.bonuses.add(new_bonus)
 
     def _check_bonus_collisions(self):
         collisions = pygame.sprite.spritecollide(self.ship, self.bonuses, False)
@@ -360,6 +365,9 @@ class AlienInvasion:
                     self.bonuses.remove(bonus)
                     self.settings.ship_fire_bonus = True
                     pygame.time.set_timer(DISABLE_FIRE_BONUS, 10000)
+                elif bonus_type == "MUSHROOM_STYLE":
+                    self.bonuses.remove(bonus)
+                    # TODO handle MUSHROOM_STYLE bonus!!!!
                 else:
                     raise ValueError(f"Unknown bonus type: {bonus.bonus_type}")
 

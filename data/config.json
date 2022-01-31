@@ -19,6 +19,7 @@
   "bonus_speed": 1,
   "bonus_life_img_path": "images/pngwing.com.png",
   "bonus_fire_img_path": "images/bullet.png",
+  "bonus_mushroom_style_img_path": "images/mushroom_style.png",
 
   "bullets_allowed": 5,
   "ship_limit": 3,
