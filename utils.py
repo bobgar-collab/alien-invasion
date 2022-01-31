@@ -14,7 +14,10 @@ def load_dictionary(path) -> dict:
         return json.load(f)
 
 
-def load_image(path: str, size: tuple) -> Surface:
+def load_image(path: str, size: tuple, angle: float = None) -> Surface:
     image = pygame.image.load(path)
-    image = pygame.transform.scale(image, size)
+    if size:
+        image = pygame.transform.scale(image, size)
+    if angle:
+        image = pygame.transform.rotate(image, angle)
     return image

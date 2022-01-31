@@ -1,4 +1,3 @@
-import pygame
 from pygame.math import Vector2
 from pygame.sprite import Sprite
 
@@ -15,8 +14,7 @@ class Bullet(Sprite):
 
         speed = self.settings.bullet_speed
 
-        self.image = load_image(path, (self.settings.bullet_width, self.settings.bullet_height))
-        self.image = pygame.transform.rotate(self.image, -angle)
+        self.image = load_image(path, (self.settings.bullet_width, self.settings.bullet_height), -angle)
 
         # start_pos is a center of the sprite.
         self.rect = self.image.get_rect(center=start_pos)

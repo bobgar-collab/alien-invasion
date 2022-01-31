@@ -43,11 +43,13 @@ class Ship(Sprite):
         self.rect.midbottom = [x + self.anim_offset_x, y + self.anim_offset_y]
 
     def show_ship_img(self):
-        self.image = load_image('images/ship_2_1.png', (80, 80))
+        path = 'images/ship_2_1.png'
+        self.image = load_image(path, (80, 80))
         self.show_jet = True
 
     def show_explosion_ship_img(self):
-        self.image = load_image('images/explosion.png', (80, 80))
+        path = 'images/explosion.png'
+        self.image = load_image(path, (80, 80))
         self.show_jet = False
 
     def update(self):
