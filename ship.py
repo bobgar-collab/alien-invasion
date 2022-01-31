@@ -1,7 +1,6 @@
 from pygame.sprite import Sprite
 
 from animation import Animation
-from utils import load_image
 
 
 class Ship(Sprite):
@@ -18,13 +17,7 @@ class Ship(Sprite):
         self.style = ai_game.style
 
         self.show_ship_img()
-        self.jet = Animation(self.screen, 100, (35, 45), [
-            'images/jet-anim/jet_1_1.png',
-            'images/jet-anim/jet_1_2.png',
-            'images/jet-anim/jet_1_3.png',
-            'images/jet-anim/jet_1_4.png',
-            'images/jet-anim/jet_1_5.png',
-        ])
+        self.jet = Animation(ai_game, 100, "animation_jet")
 
         self.rect = self.image.get_rect()
         self.jet_rect = self.jet.get_rect()
@@ -44,13 +37,11 @@ class Ship(Sprite):
         self.rect.midbottom = [x + self.anim_offset_x, y + self.anim_offset_y]
 
     def show_ship_img(self):
-        style = self.style.get_style("ship")
-        self.image = load_image(style.path, (style.width, style.height))
+        self.image = self.style.get_image("ship")
         self.show_jet = True
 
     def show_explosion_ship_img(self):
-        style = self.style.get_style("explosion")
-        self.image = load_image(style.path, (style.width, style.height))
+        self.image = self.style.get_image("explosion")
         self.show_jet = False
 
     def update(self):

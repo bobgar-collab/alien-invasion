@@ -7,14 +7,13 @@ import menu as sb
 from alien import Alien
 from bonus import Bonus, BonusType
 from bullet import Bullet
+from game_state import GameState
 from game_stats import GameStats
 from scoreboard import Scoreboard
 from screen_background import ScreenBackground
 from settings import Settings
 from ship import Ship
 from sound_manager import SoundManager
-from game_state import GameState
-
 # Events
 from style_manager import StyleManager
 
@@ -279,20 +278,18 @@ class AlienInvasion:
             self.stats.game_state = GameState.PAUSE
 
     def _alien_fire_bullet(self, alien):
-        style = self.style.get_style("bullet_green")
-        new_bullet = Bullet(self, alien.rect.midbottom, 180, style)
+        new_bullet = Bullet(self, alien.rect.midbottom, 180, "bullet_green")
         self.aliens_bullets.add(new_bullet)
         self.sound.play('shot')
 
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
-            style = self.style.get_style("bullet")
             if self.settings.ship_fire_bonus:
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, style))
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 30, style))
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, style))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, "bullet"))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 30, "bullet"))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, -30, "bullet"))
             else:
-                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, style))
+                self.bullets.add(Bullet(self, self.ship.rect.midtop, 0, "bullet"))
 
             self.sound.play('shot')
 

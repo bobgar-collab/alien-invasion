@@ -1,6 +1,3 @@
-from utils import load_image
-
-
 class ScreenBackground():
     def __init__(self, ai_game):
         self.screen = ai_game.screen
@@ -9,11 +6,9 @@ class ScreenBackground():
 
         # Show only on Start a new game
         self.show_bg_menu = True
-        menu_bg_style = self.style.get_style("menu_bg")
-        self.bg_menu = load_image(menu_bg_style.path, (menu_bg_style.width, menu_bg_style.height))
+        self.bg_menu = self.style.get_image("menu_bg")
 
-        game_bg_style = self.style.get_style("game_bg")
-        self.bg_image = load_image(game_bg_style.path, (game_bg_style.width, game_bg_style.height))
+        self.bg_image = self.style.get_image("game_bg")
 
         self.rect_a = self.screen.get_rect()
         self.rect_b = self.screen.get_rect()

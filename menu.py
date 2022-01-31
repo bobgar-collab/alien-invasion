@@ -5,7 +5,6 @@ import pygame
 import alien_invasion as ai
 from button_menu import ButtonMenu
 from game_state import GameState
-from utils import load_image
 
 
 class Menu:
@@ -17,21 +16,14 @@ class Menu:
         self.settings = ai_game.settings
         self.style = ai_game.style
 
-        style = self.style.get_style("menu_bg")
-        self.image = load_image(style.path, (style.width, style.height))
+        self.image = self.style.get_image("menu_bg")
         self.rect = self.screen.get_rect()
-
-        play_button_style = self.style.get_style("menu_play_button")
-        play_button_focus_style = self.style.get_style("menu_play_button_focus")
-        exit_button_style = self.style.get_style("menu_exit_button")
-        exit_button_focus_style = self.style.get_style("menu_exit_button_focus")
 
         screenCenterX, screenCenterY = self.screen.get_rect().center
         play_button_pos = (screenCenterX, screenCenterY - 50)
         exit_button_pos = (screenCenterX, screenCenterY + 50)
-
-        self.play_button = ButtonMenu(self, play_button_style, play_button_focus_style, play_button_pos)
-        self.exit_button = ButtonMenu(self, exit_button_style, exit_button_focus_style, exit_button_pos)
+        self.play_button = ButtonMenu(self, "menu_play_button", "menu_play_button_focus", play_button_pos)
+        self.exit_button = ButtonMenu(self, "menu_exit_button", "menu_exit_button_focus", exit_button_pos)
 
     def check_mouse_motion_event(self, event):
         if self.stats.game_state == GameState.PLAY:

@@ -1,7 +1,5 @@
 from pygame.sprite import Sprite
 
-from utils import load_image
-
 
 class Alien(Sprite):
 
@@ -12,8 +10,7 @@ class Alien(Sprite):
         self.settings = ai_game.settings
         self.style = ai_game.style
 
-        style = self.style.get_style("alien")
-        self.image = load_image(style.path, (style.width, style.height))
+        self.image = self.style.get_image("alien")
 
         self.rect = self.image.get_rect()
         self.rect.x = self.rect.width

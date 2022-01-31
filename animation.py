@@ -1,18 +1,14 @@
 import pygame
 
-from utils import load_image
-
 
 class Animation():
 
-    def __init__(self, screen, fps_time: int, scale_factor: tuple, sources: list):
-        self.screen = screen
+    def __init__(self, ai_game, fps_time: int, name):
+        self.screen = ai_game.screen
+        self.style = ai_game.style
         self.fps_time = fps_time
 
-        self.images = []
-        for path in sources:
-            img = load_image(path, scale_factor)
-            self.images.append(img)
+        self.images = self.style.get_animation_images(name)
 
         self.index = 0
         self.image = self.images[self.index]

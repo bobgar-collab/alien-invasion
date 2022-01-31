@@ -2,8 +2,6 @@ from enum import Enum
 
 from pygame.sprite import Sprite
 
-from utils import load_image
-
 
 class BonusType(Enum):
     LIFE = "LIFE"
@@ -21,17 +19,14 @@ class Bonus(Sprite):
         self.settings = ai_game.settings
         self.style = ai_game.style
 
-        style = None
         if bonus_type == BonusType.LIFE:
-            style = self.style.get_style("bonus_life")
+            self.image = self.style.get_image("bonus_life")
         elif bonus_type == BonusType.FIRE:
-            style = self.style.get_style("bonus_fire")
+            self.image = self.style.get_image("bonus_fire")
         elif bonus_type == BonusType.MUSHROOM_STYLE:
-            style = self.style.get_style("bonus_mushroom_style")
+            self.image = self.style.get_image("bonus_mushroom_style")
         else:
             raise ValueError(f"Unknown bonus type: {bonus_type}")
-
-        self.image = load_image(style.path, (style.width, style.height))
 
         self.rect = self.image.get_rect()
         self.rect.midtop = start_pos

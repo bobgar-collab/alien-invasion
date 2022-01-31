@@ -1,3 +1,7 @@
+import pygame
+from pygame import Surface
+
+
 class Struct:
     def __init__(self, **entries):
         self.__dict__.update(entries)
@@ -81,9 +85,40 @@ class StyleManager():
                 "path": "images/mushroom_style.png",
                 "width": 70,
                 "height": 70
+            },
+            "animation_jet": {
+                "paths": [
+                    'images/jet-anim/jet_1_1.png',
+                    'images/jet-anim/jet_1_2.png',
+                    'images/jet-anim/jet_1_3.png',
+                    'images/jet-anim/jet_1_4.png',
+                    'images/jet-anim/jet_1_5.png'
+                ],
+                "width": 35,
+                "height": 45
             }
         }
 
     def get_style(self, key: str) -> Struct:
         item = self.default[key]
         return Struct(**item)
+
+    def get_image(self, key: str, angle: float = None) -> Surface:
+        style = self.get_style(key)
+        return self._load_image(style.path, (style.width, style.height), angle)
+
+    def get_animation_images(self, key: str, angle: float = None) -> list:
+        animation = self.get_style(key)
+        images = []
+        for path in animation.paths:
+            img = self._load_image(path, (animation.width, animation.height), angle)
+            images.append(img)
+        return images
+
+    def _load_image(self, path: str, size: tuple, angle: float = None) -> Surface:
+        image = pygame.image.load(path)
+        if size:
+            image = pygame.transform.scale(image, size)
+        if angle:
+            image = pygame.transform.rotate(image, angle)
+        return image

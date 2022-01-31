@@ -1,20 +1,19 @@
 from pygame.math import Vector2
 from pygame.sprite import Sprite
 
-from utils import load_image
-
 
 class Bullet(Sprite):
 
-    def __init__(self, ai_game, start_pos, angle, style):
+    def __init__(self, ai_game, start_pos, angle, name):
         super().__init__()
 
         self.screen = ai_game.screen
         self.settings = ai_game.settings
+        self.style = ai_game.style
 
         speed = self.settings.bullet_speed
 
-        self.image = load_image(style.path, (style.width, style.height), -angle)
+        self.image = self.style.get_image(name, -angle)
 
         # start_pos is a center of the sprite.
         self.rect = self.image.get_rect(center=start_pos)
