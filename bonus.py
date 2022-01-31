@@ -41,6 +41,3 @@ class Bonus(Sprite):
     def update(self):
         self.y += self.settings.bonus_speed
         self.rect.y = self.y
-
-    def draw_bonus(self):
-        self.screen.blit(self.image, self.rect)

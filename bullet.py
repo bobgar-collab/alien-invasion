@@ -35,6 +35,3 @@ class Bullet(Sprite):
         self.pos += self.velocity
         # Update rect coords.
         self.rect.center = self.pos
-
-    def draw_bullet(self):
-        self.screen.blit(self.image, self.rect)

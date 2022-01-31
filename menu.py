@@ -71,7 +71,7 @@ class Menu:
     def update(self):
         pass
 
-    def draw_background(self):  #
+    def draw(self):  #
         self.screen.blit(self.bg_image, self.rect_a)
-        self.play_button.draw_button()
-        self.exit_button.draw_button()
+        self.play_button.draw()
+        self.exit_button.draw()

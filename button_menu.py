@@ -19,7 +19,7 @@ class ButtonMenu():
         self.rect = pygame.Rect(0, 0, width, height)
         self.rect.center = pos
 
-    def draw_button(self):
+    def draw(self):
         if self.focused:
             self.screen.blit(self.imageFocused, self.rect)
         else:

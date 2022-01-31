@@ -64,10 +64,10 @@ class Ship(Sprite):
         self.rect.x = self.x
         self.jet_rect.x = self.jet_x
 
-    def draw_ship(self):
+    def draw(self):
         self.screen.blit(self.image, self.rect)
         if self.show_jet:
-            self.jet.draw_animation()
+            self.jet.draw()
 
     def center_ship(self):
         self._init_position()

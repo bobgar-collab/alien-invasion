@@ -30,12 +30,12 @@ class AlienInvasion:
         if self.settings.full_screen:
             self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                    self.settings.screen_height),
-                                                  pygame.FULLSCREEN)
+                                                  pygame.FULLSCREEN, depth=16)
             self.settings.screen_width = self.screen.get_rect().width
             self.settings.screen_height = self.screen.get_rect().height
         else:
             self.screen = pygame.display.set_mode((self.settings.screen_width,
-                                                   self.settings.screen_height))
+                                                   self.settings.screen_height), depth=16)
 
         pygame.display.set_caption("Alien Invasion")
 
@@ -301,26 +301,18 @@ class AlienInvasion:
         if self.stats.game_state == GameState.PLAY:
             # PLAY
 
-            self.background.draw_background()
-            self.ship.draw_ship()
+            self.background.draw()
+            self.ship.draw()
+            self.scoreboard.draw()
+
             self.aliens.draw(self.screen)
-            self.scoreboard.show_score()
-
-            bullet: Bullet
-            for bullet in self.bullets.sprites():
-                bullet.draw_bullet()
-
-            bullet: Bullet
-            for bullet in self.aliens_bullets.sprites():
-                bullet.draw_bullet()
-
-            bonus: Bonus
-            for bonus in self.bonuses.sprites():
-                bonus.draw_bonus()
+            self.bullets.draw(self.screen)
+            self.aliens_bullets.draw(self.screen)
+            self.bonuses.draw(self.screen)
         else:
             # MENU
 
-            self.menu.draw_background()
+            self.menu.draw()
 
         pygame.display.flip()
 

@@ -1,7 +1,7 @@
 import pygame
 
 
-class ScreenBackground:
+class ScreenBackground():
     def __init__(self, ai_game):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
@@ -29,7 +29,7 @@ class ScreenBackground:
             self.y = 0.0
             self.show_bg_menu = False
 
-    def draw_background(self):
+    def draw(self):
         self.screen.blit(self.bg_image, self.rect_a)
         if self.show_bg_menu:
             self.screen.blit(self.bg_menu, self.rect_b)

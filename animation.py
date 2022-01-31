@@ -1,11 +1,9 @@
 import pygame
 
 
-class Animation(pygame.sprite.Sprite):
+class Animation():
 
     def __init__(self, screen, fps_time: int, scale_factor: tuple, sources: list):
-        super(Animation, self).__init__()
-
         self.screen = screen
         self.fps_time = fps_time
 
@@ -35,7 +33,7 @@ class Animation(pygame.sprite.Sprite):
 
         self.image = self.images[self.index]
 
-    def draw_animation(self):
+    def draw(self):
         self.screen.blit(self.image, self.rect)
 
     def get_rect(self):
