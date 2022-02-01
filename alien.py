@@ -23,12 +23,11 @@ class Alien(Sprite):
 
     def check_edges(self):
         screen_rect = self.screen.get_rect()
-        # TODO
         direction = self.settings.fleet_direction
-        # direction > 0 - Mowing right
-        # direction < 0 - Mowing left
-        #  Left                   Right
-        if self.rect.left <= 0 or self.rect.right >= screen_rect.right:
+        # direction > 0 - Move right
+        # direction < 0 - Move left
+        #  Left side of the screen                    Right side of the screen
+        if (self.rect.left <= 0 and direction < 0) or (self.rect.right >= screen_rect.right and direction > 0):
             return True
 
     def update(self):
