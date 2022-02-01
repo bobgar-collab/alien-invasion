@@ -1,0 +1,160 @@
+{
+  "default": {
+    "game_bg": {
+      "path": "images/game_bg.jpg",
+      "width": "#screen_width",
+      "height": "#screen_height"
+    },
+    "menu_bg": {
+      "path": "images/menu/menu_bg.png",
+      "width": "#screen_width",
+      "height": "#screen_height"
+    },
+    "menu_play_button": {
+      "paths": [
+        "images/menu/menu_btn_play.png",
+        "images/menu/menu_btn_play_focus.png"
+      ],
+      "width": 280,
+      "height": 60
+    },
+    "menu_exit_button": {
+      "paths": [
+        "images/menu/menu_btn_exit.png",
+        "images/menu/menu_btn_exit_focus.png"
+      ],
+      "width": 280,
+      "height": 60
+    },
+    "alien": {
+      "path": "images/pixilart-drawing (1).png",
+      "width": 80,
+      "height": 80
+    },
+    "ship": {
+      "path": "images/ship_2_1.png",
+      "width": 80,
+      "height": 80
+    },
+    "explosion": {
+      "path": "images/explosion.png",
+      "width": 80,
+      "height": 80
+    },
+    "bullet": {
+      "path": "images/bullet.png",
+      "width": 15,
+      "height": 45
+    },
+    "bullet_green": {
+      "path": "images/bullet_green.png",
+      "width": 15,
+      "height": 45
+    },
+    "bonus_life": {
+      "path": "images/pngwing.com.png",
+      "width": 70,
+      "height": 70
+    },
+    "bonus_fire": {
+      "path": "images/bullet.png",
+      "width": 70,
+      "height": 70
+    },
+    "bonus_mushroom_style": {
+      "path": "images/mushroom_style.png",
+      "width": 70,
+      "height": 70
+    },
+    "animation_jet": {
+      "paths": [
+        "images/jet-anim/jet_1_1.png",
+        "images/jet-anim/jet_1_2.png",
+        "images/jet-anim/jet_1_3.png",
+        "images/jet-anim/jet_1_4.png",
+        "images/jet-anim/jet_1_5.png"
+      ],
+      "width": 35,
+      "height": 45
+    }
+  },
+  "bonus": {
+    "game_bg": {
+      "path": "images/game_bg.jpg",
+      "width": "#screen_width",
+      "height": "#screen_height"
+    },
+    "menu_bg": {
+      "path": "images/menu/menu_bg.png",
+      "width": "#screen_width",
+      "height": "#screen_height"
+    },
+    "menu_play_button": {
+      "paths": [
+        "images/menu/menu_btn_play.png",
+        "images/menu/menu_btn_play_focus.png"
+      ],
+      "width": 280,
+      "height": 60
+    },
+    "menu_exit_button": {
+      "paths": [
+        "images/menu/menu_btn_exit.png",
+        "images/menu/menu_btn_exit_focus.png"
+      ],
+      "width": 280,
+      "height": 60
+    },
+    "alien": {
+      "path": "images/mushroom_style.png",
+      "width": 90,
+      "height": 90
+    },
+    "ship": {
+      "path": "images/ship_2_1.png",
+      "width": 80,
+      "height": 80
+    },
+    "explosion": {
+      "path": "images/explosion.png",
+      "width": 80,
+      "height": 80
+    },
+    "bullet": {
+      "path": "images/bullet.png",
+      "width": 15,
+      "height": 45
+    },
+    "bullet_green": {
+      "path": "images/bullet_green.png",
+      "width": 15,
+      "height": 45
+    },
+    "bonus_life": {
+      "path": "images/pngwing.com.png",
+      "width": 70,
+      "height": 70
+    },
+    "bonus_fire": {
+      "path": "images/bullet.png",
+      "width": 70,
+      "height": 70
+    },
+    "bonus_mushroom_style": {
+      "path": "images/mushroom_style.png",
+      "width": 70,
+      "height": 70
+    },
+    "animation_jet": {
+      "paths": [
+        "images/jet-anim/jet_1_1.png",
+        "images/jet-anim/jet_1_2.png",
+        "images/jet-anim/jet_1_3.png",
+        "images/jet-anim/jet_1_4.png",
+        "images/jet-anim/jet_1_5.png"
+      ],
+      "width": 35,
+      "height": 45
+    }
+  }
+}

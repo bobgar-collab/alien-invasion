@@ -1,113 +1,88 @@
+import json
+from enum import Enum
+
 import pygame
 from pygame import Surface
 
 
-class Struct:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
+class StyleType(Enum):
+    default = "default"
+    bonus = "bonus"
+
+
+class ImageProxy:
+
+    def __init__(self, manager, key: str):
+        self.settings = manager.game.settings
+        self.manager = manager
+
+        self.key = key
+        self.state = None
+        self.image = None
+        self.rect = None
+
+        self.update()
+
+    def update(self):
+        if self.state != self.settings.mushroom_style_bonus:
+            self.state = self.settings.mushroom_style_bonus
+
+            if self.state:
+                st = StyleType.bonus
+            else:
+                st = StyleType.default
+
+            rect = self.rect
+            self.image = self.manager.get_image(self.key, style=st)
+            self.rect = self.image.get_rect()
+            if rect:
+                self.rect.center = rect.center
 
 
 class StyleManager():
 
-    def __init__(self, ai_game):
-        self.screen_rect = ai_game.screen.get_rect()
+    def __init__(self, game):
+        self.game = game
 
-        self.default = {
-            "game_bg": {
-                "path": "images/game_bg.jpg",
-                "width": self.screen_rect.w,
-                "height": self.screen_rect.h
-            },
-            "menu_bg": {
-                "path": "images/menu/menu_bg.png",
-                "width": self.screen_rect.w,
-                "height": self.screen_rect.h
-            },
-            "menu_play_button": {
-                "paths": [
-                    "images/menu/menu_btn_play.png",
-                    "images/menu/menu_btn_play_focus.png"
-                ],
-                "width": 280,
-                "height": 60
-            },
-            "menu_exit_button": {
-                "paths": [
-                    "images/menu/menu_btn_exit.png",
-                    "images/menu/menu_btn_exit_focus.png"
-                ],
-                "width": 280,
-                "height": 60
-            },
-            "alien": {
-                "path": "images/pixilart-drawing (1).png",
-                "width": 80,
-                "height": 80
-            },
-            "ship": {
-                "path": "images/ship_2_1.png",
-                "width": 80,
-                "height": 80
-            },
-            "explosion": {
-                "path": "images/explosion.png",
-                "width": 80,
-                "height": 80
-            },
-            "bullet": {
-                "path": "images/bullet.png",
-                "width": 15,
-                "height": 45
-            },
-            "bullet_green": {
-                "path": "images/bullet_green.png",
-                "width": 15,
-                "height": 45
-            },
-            "bonus_life": {
-                "path": "images/pngwing.com.png",
-                "width": 70,
-                "height": 70
-            },
-            "bonus_fire": {
-                "path": "images/bullet.png",
-                "width": 70,
-                "height": 70
-            },
-            "bonus_mushroom_style": {
-                "path": "images/mushroom_style.png",
-                "width": 70,
-                "height": 70
-            },
-            "animation_jet": {
-                "paths": [
-                    'images/jet-anim/jet_1_1.png',
-                    'images/jet-anim/jet_1_2.png',
-                    'images/jet-anim/jet_1_3.png',
-                    'images/jet-anim/jet_1_4.png',
-                    'images/jet-anim/jet_1_5.png'
-                ],
-                "width": 35,
-                "height": 45
-            }
-        }
+        screen_rect = game.screen.get_rect()
 
-    def get_image(self, key: str, angle: float = None) -> Surface:
-        style = self._get_style(key)
-        image = self._load_image(style.path, (style.width, style.height), angle)
+        # Parse config
+        data_str = open('data/styles.json', 'r').read()
+        data_str = data_str.replace("\"#screen_width\"", str(screen_rect.width))
+        data_str = data_str.replace("\"#screen_height\"", str(screen_rect.height))
+        data_json = json.loads(data_str)
+
+        # Load Images
+        self.styles = dict()
+        for style_name, style_value in data_json.items():
+            style = dict()
+            self.styles[style_name] = style
+            for key, item in style_value.items():
+                w = item.get("width")
+                h = item.get("height")
+                path = item.get("path")
+                paths = item.get("paths")
+                if path:
+                    style[key] = self._load_image(path, (w, h))
+                else:
+                    images = []
+                    for path_item in paths:
+                        image = self._load_image(path_item, (w, h))
+                        images.append(image)
+                    style[key] = images
+
+    def get_image_proxy(self, key: str) -> ImageProxy:
+        return ImageProxy(self, key)
+
+    def get_image(self, key: str, angle: float = None, style: StyleType = StyleType.default) -> Surface:
+        image = self.styles[style.value][key]
+        if angle:
+            image = pygame.transform.rotate(image, angle)
         return image
 
-    def get_images(self, key: str, angle: float = None) -> list:
-        style = self._get_style(key)
-        images = []
-        for path in style.paths:
-            img = self._load_image(path, (style.width, style.height), angle)
-            images.append(img)
+    def get_images(self, key: str, style: StyleType = StyleType.default) -> list:
+        images = self.styles[style.value][key]
         return images
-
-    def _get_style(self, key: str) -> Struct:
-        item = self.default[key]
-        return Struct(**item)
 
     def _load_image(self, path: str, size: tuple, angle: float = None) -> Surface:
         image = pygame.image.load(path)
