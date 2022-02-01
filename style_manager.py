@@ -11,6 +11,7 @@ class StyleManager():
 
     def __init__(self, ai_game):
         self.screen_rect = ai_game.screen.get_rect()
+
         self.default = {
             "game_bg": {
                 "path": "images/game_bg.jpg",
@@ -91,22 +92,22 @@ class StyleManager():
             }
         }
 
-    def get_style(self, key: str) -> Struct:
-        item = self.default[key]
-        return Struct(**item)
-
     def get_image(self, key: str, angle: float = None) -> Surface:
-        style = self.get_style(key)
+        style = self._get_style(key)
         image = self._load_image(style.path, (style.width, style.height), angle)
         return image
 
     def get_images(self, key: str, angle: float = None) -> list:
-        style = self.get_style(key)
+        style = self._get_style(key)
         images = []
         for path in style.paths:
             img = self._load_image(path, (style.width, style.height), angle)
             images.append(img)
         return images
+
+    def _get_style(self, key: str) -> Struct:
+        item = self.default[key]
+        return Struct(**item)
 
     def _load_image(self, path: str, size: tuple, angle: float = None) -> Surface:
         image = pygame.image.load(path)
