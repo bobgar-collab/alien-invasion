@@ -22,8 +22,8 @@ class Menu:
         screenCenterX, screenCenterY = self.screen.get_rect().center
         play_button_pos = (screenCenterX, screenCenterY - 50)
         exit_button_pos = (screenCenterX, screenCenterY + 50)
-        self.play_button = ButtonMenu(self, "menu_play_button", "menu_play_button_focus", play_button_pos)
-        self.exit_button = ButtonMenu(self, "menu_exit_button", "menu_exit_button_focus", exit_button_pos)
+        self.play_button = ButtonMenu(self, "menu_play_button", play_button_pos)
+        self.exit_button = ButtonMenu(self, "menu_exit_button", exit_button_pos)
 
     def check_mouse_motion_event(self, event):
         if self.stats.game_state == GameState.PLAY:
@@ -59,7 +59,8 @@ class Menu:
             sys.exit()
 
     def update(self):
-        pass
+        self.play_button.update()
+        self.exit_button.update()
 
     def draw(self):  #
         self.screen.blit(self.image, self.rect)

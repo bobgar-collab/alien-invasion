@@ -22,25 +22,19 @@ class StyleManager():
                 "width": self.screen_rect.w,
                 "height": self.screen_rect.h
             },
-            # play_button
             "menu_play_button": {
-                "path": "images/menu/menu_btn_play.png",
+                "paths": [
+                    "images/menu/menu_btn_play.png",
+                    "images/menu/menu_btn_play_focus.png"
+                ],
                 "width": 280,
                 "height": 60
             },
-            "menu_play_button_focus": {
-                "path": "images/menu/menu_btn_play_focus.png",
-                "width": 280,
-                "height": 60
-            },
-            # exit_button
             "menu_exit_button": {
-                "path": "images/menu/menu_btn_exit.png",
-                "width": 280,
-                "height": 60
-            },
-            "menu_exit_button_focus": {
-                "path": "images/menu/menu_btn_exit_focus.png",
+                "paths": [
+                    "images/menu/menu_btn_exit.png",
+                    "images/menu/menu_btn_exit_focus.png"
+                ],
                 "width": 280,
                 "height": 60
             },
@@ -59,7 +53,6 @@ class StyleManager():
                 "width": 80,
                 "height": 80
             },
-            # bullet
             "bullet": {
                 "path": "images/bullet.png",
                 "width": 15,
@@ -70,7 +63,6 @@ class StyleManager():
                 "width": 15,
                 "height": 45
             },
-            # bonus
             "bonus_life": {
                 "path": "images/pngwing.com.png",
                 "width": 70,
