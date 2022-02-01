@@ -1,7 +1,7 @@
 {
   "record_file_path": "data/records.json",
 
-  "full_screen": true,
+  "full_screen": false,
   "screen_width": 1280,
   "screen_height": 720,
 

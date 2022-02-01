@@ -84,7 +84,8 @@ class StyleManager():
         images = self.styles[style.value][key]
         return images
 
-    def _load_image(self, path: str, size: tuple, angle: float = None) -> Surface:
+    @staticmethod
+    def _load_image(path: str, size: tuple, angle: float = None) -> Surface:
         image = pygame.image.load(path)
         if size:
             image = pygame.transform.scale(image, size)
