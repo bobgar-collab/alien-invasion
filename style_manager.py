@@ -3,20 +3,22 @@ from enum import Enum
 
 import pygame
 from pygame import Surface
+from pygame.rect import Rect
 
 
 class StyleType(Enum):
-    default = "default"
-    bonus = "bonus"
+    default = 'default'
+    bonus = 'bonus'
 
 
 class ImageProxy:
 
-    def __init__(self, manager, key: str):
+    def __init__(self, manager, key: str, angle: float):
         self.settings = manager.game.settings
         self.manager = manager
 
         self.key = key
+        self.angle = angle
         self.state = None
         self.image = None
         self.rect = None
@@ -32,8 +34,8 @@ class ImageProxy:
             else:
                 st = StyleType.default
 
-            rect = self.rect
-            self.image = self.manager.get_image(self.key, style=st)
+            rect: Rect = self.rect
+            self.image = self.manager.get_image(self.key, self.angle, st)
             self.rect = self.image.get_rect()
             if rect:
                 self.rect.center = rect.center
@@ -48,8 +50,8 @@ class StyleManager():
 
         # Parse config
         data_str = open('data/styles.json', 'r').read()
-        data_str = data_str.replace("\"#screen_width\"", str(screen_rect.width))
-        data_str = data_str.replace("\"#screen_height\"", str(screen_rect.height))
+        data_str = data_str.replace('"#screen_width"', str(screen_rect.width))
+        data_str = data_str.replace('"#screen_height"', str(screen_rect.height))
         data_json = json.loads(data_str)
 
         # Load Images
@@ -58,10 +60,10 @@ class StyleManager():
             style = dict()
             self.styles[style_name] = style
             for key, item in style_value.items():
-                w = item.get("width")
-                h = item.get("height")
-                path = item.get("path")
-                paths = item.get("paths")
+                w = item.get('width')
+                h = item.get('height')
+                path = item.get('path')
+                paths = item.get('paths')
                 if path:
                     style[key] = self._load_image(path, (w, h))
                 else:
@@ -71,8 +73,8 @@ class StyleManager():
                         images.append(image)
                     style[key] = images
 
-    def get_image_proxy(self, key: str) -> ImageProxy:
-        return ImageProxy(self, key)
+    def get_image_proxy(self, key: str, angle: float = None) -> ImageProxy:
+        return ImageProxy(self, key, angle)
 
     def get_image(self, key: str, angle: float = None, style: StyleType = StyleType.default) -> Surface:
         image = self.styles[style.value][key]
