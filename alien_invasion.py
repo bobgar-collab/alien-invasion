@@ -276,6 +276,9 @@ class AlienInvasion:
             self._fire_bullet()
         elif event.key == pygame.K_ESCAPE:
             self.stats.game_state = GameState.PAUSE
+        # TODO Temporary
+        elif event.key == pygame.K_e:
+            self.settings.mushroom_style_bonus = not self.settings.mushroom_style_bonus
 
     def _alien_fire_bullet(self, alien):
         new_bullet = Bullet(self, alien.rect.midbottom, 180, "bullet_green")
